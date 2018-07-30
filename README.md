@@ -88,7 +88,7 @@ build the library binary manually. This can be done with the following command `
 
 Clone recursively to pull-in needed submodule(s):
 
-`$ git clone --recursive https://github.com/X-CASH-official/X-CASH`
+`$ git clone https://github.com/X-CASH-official/X-CASH`
 
 If you already have a repo cloned, initialize and update:
 
