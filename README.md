@@ -47,6 +47,13 @@ If you want to help out, see [CONTRIBUTING](CONTRIBUTING.md) for a set of guidel
 
 Note future releases block heights and dates may change, so make sure to frequently check github, our website, the forums, etc. for the most up to date information.
 
+## Issues with the Linux prebuilt binaries
+If you receive the message
+`error while loading shared libraries: libreadline.so.7: cannot open shared object file: No such file or directory`
+ when running any of the binaries, you will want to run
+`sudo ln -s /lib/x86_64-linux-gnu/libreadline.so.6 /lib/x86_64-linux-gnu/libreadline.so.7`
+This will create compatibility for libreadline.so.6
+
 ## Compiling X-CASH from source
 
 ### Dependencies
