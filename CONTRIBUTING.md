@@ -64,14 +64,12 @@ This Specification is distributed in the hope that it will be useful, but WITHOU
 
 You should have received a copy of the GNU General Public License along with this program; if not, see <http://www.gnu.org/licenses>.
 
-## Language
+# Language
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in RFC 2119.
 
-The "Monero Maintainer Team" is defined in this document as the following users:
-- fluffypony
-- xcashmooo
-- hyc
+The "X-CASH Maintainer Team" is defined in this document as the following users:
+- X-CASH-official
 
 ## Goals
 
@@ -127,7 +125,7 @@ C4 is meant to provide a reusable optimal collaboration model for open source so
 - To request changes, a user SHOULD log an issue on the project Platform issue tracker.
 - The user or Contributor SHOULD write the issue by describing the problem they face or observe.
 - The user or Contributor SHOULD seek consensus on the accuracy of their observation, and the value of solving the problem.
-- Users SHALL NOT log feature requests, ideas, or suggestions unrelated to XCash code or XCash's dependency code or XCash's potential/future dependency code or research which successfully implements Monero.
+- Users SHALL NOT log feature requests, ideas, or suggestions unrelated to XCash code or XCash's dependency code or XCash's potential/future dependency code.
 - Users SHALL NOT log any solutions to problems (verifiable or hypothetical) of which are not explicitly documented and/or not provable and/or cannot be reasonably proven.
 - Thus, the release history of the project SHALL be a list of meaningful issues logged and solved.
 - To work on an issue, a Contributor SHALL fork the project repository and then work on their forked repository.
