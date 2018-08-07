@@ -8,7 +8,7 @@ Portions Copyright (c) 2012-2013 The Cryptonote developers.
 - Web: [x-cash.org](https://x-cash.org)
 - Explorer: [explorer.x-cash.org](https://explorer.x-cash.org)
 - Official Mining Pool: [minexcash.com](http://minexcash.com)
-- Bitcointalk: [Bitcointalk](https://forum.getmonero.org)
+- Bitcointalk: [Bitcointalk](https://bitcointalk.org/index.php?topic=4781246.0)
 - Reddit: [xcash](https://www.reddit.com/r/xcash/)
 - Telegram: [xcashglobal](https://t.me/xcashglobal)
 - Twitter: [XCashCrypto](https://twitter.com/XCashCrypto/)
