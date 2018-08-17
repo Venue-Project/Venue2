@@ -10,8 +10,10 @@ Portions Copyright (c) 2012-2013 The Cryptonote developers.
 - Official Mining Pool: [minexcash.com](http://minexcash.com)
 - Bitcointalk: [Bitcointalk](https://bitcointalk.org/index.php?topic=4781246.0)
 - Reddit: [xcash](https://www.reddit.com/r/xcash/)
-- Telegram: [xcashglobal](https://t.me/xcashglobal)
 - Twitter: [XCashCrypto](https://twitter.com/XCashCrypto/)
+- Telegram: [xcashglobal](https://t.me/xcashglobal)
+- Discord: [xcash](https://discord.gg/4CAahnd)
+- Medium: [guilhem.c](https://medium.com/@guilhem.c)
 - Mail: [accounts@x-cash.org](mailto:accounts@x-cash.org)
 - GitHub: [https://github.com/X-CASH-official/X-CASH](https://github.com/X-CASH-official/X-CASH)
 
