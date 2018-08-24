@@ -98,8 +98,8 @@ static const struct {
   // version 7 starts from block 1, which is on or around July 18, 2018. This version includes the new POW cryptonight_v7 algorithm.
   { 7, 1, 0, 1531962000 },
 
-  // version 8 starts from block 52610, which is on or around Sept 1, 2018. This version includes 0 mixin transactions and a new variable fee formula.
-  { 8, 62690, 0, 1535760000 },
+  // version 8 starts from block 94740, which is on or around Oct 1, 2018. This version includes 0 mixin transactions and a new variable fee formula.
+  { 8, 94740, 0, 1538265600 },
 };
 static const uint64_t mainnet_hard_fork_version_1_till = 1;
 
@@ -115,8 +115,8 @@ static const struct {
   // version 7 starts from block 1, which is on or around July 18, 2018. This version includes the new POW cryptonight_v7 algorithm.
   { 7, 1, 0, 1531962000 },
 
-  // version 8 starts from block 52610, which is on or around Aug 25, 2018. This version includes 0 mixin transactions and a new variable fee formula.
-  { 8, 52610, 0, 1535155200 },
+  // version 8 starts from block 83220, which is on or around Sept 24, 2018. This version includes 0 mixin transactions and a new variable fee formula.
+  { 8, 83220, 0, 1537660800 },
 };
 static const uint64_t testnet_hard_fork_version_1_till = 1;
 
@@ -2559,7 +2559,7 @@ bool Blockchain::check_tx_inputs(transaction& tx, tx_verification_context &tvc, 
   {
     size_t n_unmixable = 0, n_mixable = 0;
     size_t mixin = std::numeric_limits<size_t>::max();
-    const size_t min_mixin = hf_version >= HF_VERSION_MIN_MIXIN_6 ? 1 : hf_version >= HF_VERSION_MIN_MIXIN_4 ? 1 : 0;
+    const size_t min_mixin = 1;
     for (const auto& txin : tx.vin)
     {
       // non txin_to_key inputs will be rejected below
