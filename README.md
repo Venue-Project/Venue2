@@ -45,16 +45,9 @@ If you want to help out, see [CONTRIBUTING](CONTRIBUTING.md) for a set of guidel
 | ------------------------------ | -----------| ----------------- | ---------------------------------------------------------------------------------- |
 | 0                       | 22-07-2018 | v1                 |  Genesis block       |
 | 1                       | 22-07-2018 | v7                 |  Start of the blockchain       |
-| 62690                       | 01-09-2018 | v8                 | Adding public transactions (transactions with mixin 0)       |
+| 94740                   | 01-10-2018 | v8                 | Adding public transactions (transactions with mixin 0)       |
 
 Note future releases block heights and dates may change, so make sure to frequently check github, our website, the forums, etc. for the most up to date information.
-
-## Issues with the Linux prebuilt binaries
-If you receive the message
-`error while loading shared libraries: libreadline.so.7: cannot open shared object file: No such file or directory`
- when running any of the binaries, you will want to run
-`sudo ln -s /lib/x86_64-linux-gnu/libreadline.so.6 /lib/x86_64-linux-gnu/libreadline.so.7`
-This will create compatibility for libreadline.so.6
 
 ## Compiling X-CASH from source
 
@@ -138,10 +131,7 @@ invokes cmake commands as needed.
 
          make release-static
 
-* For GCC 8.1 and above, to build statically-linked binaries, you may need to use:
-
-         make release-static CXXFLAGS="-Wno-error=class-memaccess" CFLAGS="-Wno-error=class-memaccess" LDFLAGS="-L/usr/local/lib -lunwind -static-libgcc -static-libstdc++ -Wl,-Bstatic -lzmq -lstdc++ -lgcc -Wl,-Bdynamic"
-
+Dependencies need to be built with -fPIC. Static libraries usually aren't, so you may have to build them yourself with -fPIC. Refer to their documentation for how to build them.
 
 * **Optional**: build documentation in `doc/html` (omit `HAVE_DOT=YES` if `graphviz` is not installed):
 
