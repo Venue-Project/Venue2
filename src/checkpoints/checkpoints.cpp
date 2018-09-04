@@ -159,7 +159,7 @@ namespace cryptonote
     return true;
   }
 
-  bool checkpoints::init_default_checkpoints(network_type nettype)
+bool checkpoints::init_default_checkpoints(network_type nettype)
   {
     if (nettype == TESTNET)
     {
@@ -170,7 +170,7 @@ namespace cryptonote
       return true;
     }
     return true;
-  }
+}
 
   bool checkpoints::load_checkpoints_from_json(const std::string &json_hashfile_fullpath)
   {
@@ -212,7 +212,7 @@ namespace cryptonote
   {
     std::vector<std::string> records;
 
-    // All four XCashPulse domains have DNSSEC on and valid
+    // All four X-CASHPulse domains have DNSSEC on and valid
     static const std::vector<std::string> dns_urls = { "checkpoints.xcashpulse.se"
 						     , "checkpoints.xcashpulse.org"
 						     , "checkpoints.xcashpulse.net"

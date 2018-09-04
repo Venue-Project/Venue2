@@ -143,7 +143,9 @@ write_q(int fd, int udp, SSL* ssl, sldns_buffer* buf, uint16_t id,
 		edns.edns_present = 1;
 		edns.bits = EDNS_DO;
 		edns.udp_size = 4096;
-		attach_edns_record(buf, &edns);
+		if(sldns_buffer_capacity(buf) >=
+			sldns_buffer_limit(buf)+calc_edns_field_size(&edns))
+			attach_edns_record(buf, &edns);
 	}
 
 	/* send it */
@@ -408,7 +410,9 @@ int main(int argc, char** argv)
 		return 1;
 	}
 	if(usessl) {
+#if OPENSSL_VERSION_NUMBER < 0x10100000 || !defined(HAVE_OPENSSL_INIT_SSL)
 		ERR_load_SSL_strings();
+#endif
 #if OPENSSL_VERSION_NUMBER < 0x10100000 || !defined(HAVE_OPENSSL_INIT_CRYPTO)
 		OpenSSL_add_all_algorithms();
 #else
@@ -419,7 +423,7 @@ int main(int argc, char** argv)
 #if OPENSSL_VERSION_NUMBER < 0x10100000 || !defined(HAVE_OPENSSL_INIT_SSL)
 		(void)SSL_library_init();
 #else
-		(void)OPENSSL_init_ssl(0, NULL);
+		(void)OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
 #endif
 	}
 	send_em(svr, udp, usessl, noanswer, argc, argv);

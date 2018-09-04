@@ -1,4 +1,4 @@
-// Word list created by Monero contributor Shrikez
+// Word list created by X-CASH contributor Shrikez
 // 
 // Copyright (c) 2018 X-CASH Project, Derived from 2014-2018, The Monero Project
 // 

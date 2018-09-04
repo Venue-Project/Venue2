@@ -271,7 +271,7 @@ namespace cryptonote
       {
         //std::list<std::string> txs_as_json;
         uint64_t total_received;
-        uint64_t total_received_unlocked = 0; // OpenMonero only
+        uint64_t total_received_unlocked = 0; // OpenX-CASH only
         uint64_t scanned_height;
         std::list<transaction> transactions;
         uint64_t blockchain_height;
@@ -355,7 +355,7 @@ namespace cryptonote
         std::string amount;
         std::string address;
         std::string view_key;
-        // OpenMonero specific
+        // OpenX-CASH specific
         uint64_t mixin;
         bool use_dust;
         std::string dust_threshold;
@@ -563,10 +563,12 @@ namespace cryptonote
     {
       std::list<std::string> txs_hashes;
       bool decode_as_json;
+      bool prune;
 
       BEGIN_KV_SERIALIZE_MAP()
         KV_SERIALIZE(txs_hashes)
         KV_SERIALIZE(decode_as_json)
+        KV_SERIALIZE_OPT(prune, false)
       END_KV_SERIALIZE_MAP()
     };
 
@@ -1705,7 +1707,7 @@ namespace cryptonote
   {
     struct request
     {
-      int64_t limit_down;
+      int64_t limit_down;  // all limits (for get and set) are kB/s
       int64_t limit_up;
       
       BEGIN_KV_SERIALIZE_MAP()
@@ -2212,11 +2214,13 @@ namespace cryptonote
     {
       std::vector<uint64_t> amounts;
       uint64_t from_height;
+      uint64_t to_height;
       bool cumulative;
 
       BEGIN_KV_SERIALIZE_MAP()
         KV_SERIALIZE(amounts)
         KV_SERIALIZE_OPT(from_height, (uint64_t)0)
+        KV_SERIALIZE_OPT(to_height, (uint64_t)0)
         KV_SERIALIZE_OPT(cumulative, false)
       END_KV_SERIALIZE_MAP()
     };

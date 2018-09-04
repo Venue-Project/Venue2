@@ -1,7 +1,6 @@
-# Portions Copyright (c) 2017-2018, The Monero Project
-# Portions Copyright (c) 2018, XCash Project
+# Portions Copyright (c) 2017-2018, The X-CASH Project
 # This file is based off of the https://code.google.com/archive/p/ios-cmake/
-# It has been altered for XCash iOS development
+# It has been altered for X-CASH iOS development
 #
 #
 # Options:

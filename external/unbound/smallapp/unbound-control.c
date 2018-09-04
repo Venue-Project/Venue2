@@ -161,7 +161,7 @@ usage(void)
 static const int inhibit_zero = 1;
 /** divide sum of timers to get average */
 static void
-timeval_divide(struct timeval* avg, const struct timeval* sum, size_t d)
+timeval_divide(struct timeval* avg, const struct timeval* sum, long long d)
 {
 #ifndef S_SPLINT_S
 	size_t leftover;
@@ -184,12 +184,14 @@ timeval_divide(struct timeval* avg, const struct timeval* sum, size_t d)
 #define PR_UL_SUB(str, nm, var) printf(str".%s"SQ"%lu\n", nm, (unsigned long)(var));
 #define PR_TIMEVAL(str, var) printf(str SQ ARG_LL "d.%6.6d\n", \
 	(long long)var.tv_sec, (int)var.tv_usec);
+#define PR_STATSTIME(str, var) printf(str SQ ARG_LL "d.%6.6d\n", \
+	(long long)var ## _sec, (int)var ## _usec);
 #define PR_LL(str, var) printf(str SQ ARG_LL"d\n", (long long)(var));
 
 /** print stat block */
-static void pr_stats(const char* nm, struct stats_info* s)
+static void pr_stats(const char* nm, struct ub_stats_info* s)
 {
-	struct timeval avg;
+	struct timeval sumwait, avg;
 	PR_UL_NM("num.queries", s->svr.num_queries);
 	PR_UL_NM("num.queries_ip_ratelimited", 
 		s->svr.num_queries_ip_ratelimited);
@@ -205,18 +207,22 @@ static void pr_stats(const char* nm, struct stats_info* s)
     PR_UL_NM("num.dnscrypt.cleartext", s->svr.num_query_dnscrypt_cleartext);
     PR_UL_NM("num.dnscrypt.malformed",
              s->svr.num_query_dnscrypt_crypted_malformed);
-#endif
+#endif /* USE_DNSCRYPT */
 	printf("%s.requestlist.avg"SQ"%g\n", nm,
 		(s->svr.num_queries_missed_cache+s->svr.num_queries_prefetch)?
 			(double)s->svr.sum_query_list_size/
-			(s->svr.num_queries_missed_cache+
+			(double)(s->svr.num_queries_missed_cache+
 			s->svr.num_queries_prefetch) : 0.0);
 	PR_UL_NM("requestlist.max", s->svr.max_query_list_size);
 	PR_UL_NM("requestlist.overwritten", s->mesh_jostled);
 	PR_UL_NM("requestlist.exceeded", s->mesh_dropped);
 	PR_UL_NM("requestlist.current.all", s->mesh_num_states);
 	PR_UL_NM("requestlist.current.user", s->mesh_num_reply_states);
-	timeval_divide(&avg, &s->mesh_replies_sum_wait, s->mesh_replies_sent);
+#ifndef S_SPLINT_S
+	sumwait.tv_sec = s->mesh_replies_sum_wait_sec;
+	sumwait.tv_usec = s->mesh_replies_sum_wait_usec;
+#endif
+	timeval_divide(&avg, &sumwait, s->mesh_replies_sent);
 	printf("%s.", nm);
 	PR_TIMEVAL("recursion.time.avg", avg);
 	printf("%s.recursion.time.median"SQ"%g\n", nm, s->mesh_time_median);
@@ -224,27 +230,37 @@ static void pr_stats(const char* nm, struct stats_info* s)
 }
 
 /** print uptime */
-static void print_uptime(struct shm_stat_info* shm_stat)
+static void print_uptime(struct ub_shm_stat_info* shm_stat)
 {
-	PR_TIMEVAL("time.now", shm_stat->time.now);
-	PR_TIMEVAL("time.up", shm_stat->time.up);
-	PR_TIMEVAL("time.elapsed", shm_stat->time.elapsed);
+	PR_STATSTIME("time.now", shm_stat->time.now);
+	PR_STATSTIME("time.up", shm_stat->time.up);
+	PR_STATSTIME("time.elapsed", shm_stat->time.elapsed);
 }
 
 /** print memory usage */
-static void print_mem(struct shm_stat_info* shm_stat)
+static void print_mem(struct ub_shm_stat_info* shm_stat)
 {
 	PR_LL("mem.cache.rrset", shm_stat->mem.rrset);
 	PR_LL("mem.cache.message", shm_stat->mem.msg);
-	PR_LL("mem.cache.iterator", shm_stat->mem.iter);
-	PR_LL("mem.cache.validator", shm_stat->mem.val);
+	PR_LL("mem.mod.iterator", shm_stat->mem.iter);
+	PR_LL("mem.mod.validator", shm_stat->mem.val);
+	PR_LL("mem.mod.respip", shm_stat->mem.respip);
 #ifdef CLIENT_SUBNET
-	PR_LL("mem.cache.subnet", shm_stat->mem.subnet);
+	PR_LL("mem.mod.subnet", shm_stat->mem.subnet);
+#endif
+#ifdef USE_IPSECMOD
+	PR_LL("mem.mod.ipsecmod", shm_stat->mem.ipsecmod);
+#endif
+#ifdef USE_DNSCRYPT
+	PR_LL("mem.cache.dnscrypt_shared_secret",
+		shm_stat->mem.dnscrypt_shared_secret);
+	PR_LL("mem.cache.dnscrypt_nonce",
+		shm_stat->mem.dnscrypt_nonce);
 #endif
 }
 
 /** print histogram */
-static void print_hist(struct stats_info* s)
+static void print_hist(struct ub_stats_info* s)
 {
 	struct timehist* hist;
 	size_t i;
@@ -264,13 +280,13 @@ static void print_hist(struct stats_info* s)
 }
 
 /** print extended */
-static void print_extended(struct stats_info* s)
+static void print_extended(struct ub_stats_info* s)
 {
 	int i;
 	char nm[16];
 
 	/* TYPE */
-	for(i=0; i<STATS_QTYPE_NUM; i++) {
+	for(i=0; i<UB_STATS_QTYPE_NUM; i++) {
 		if(inhibit_zero && s->svr.qtype[i] == 0)
 			continue;
 		sldns_wire2str_type_buf((uint16_t)i, nm, sizeof(nm));
@@ -281,7 +297,7 @@ static void print_extended(struct stats_info* s)
 	}
 
 	/* CLASS */
-	for(i=0; i<STATS_QCLASS_NUM; i++) {
+	for(i=0; i<UB_STATS_QCLASS_NUM; i++) {
 		if(inhibit_zero && s->svr.qclass[i] == 0)
 			continue;
 		sldns_wire2str_class_buf((uint16_t)i, nm, sizeof(nm));
@@ -292,7 +308,7 @@ static void print_extended(struct stats_info* s)
 	}
 
 	/* OPCODE */
-	for(i=0; i<STATS_OPCODE_NUM; i++) {
+	for(i=0; i<UB_STATS_OPCODE_NUM; i++) {
 		if(inhibit_zero && s->svr.qopcode[i] == 0)
 			continue;
 		sldns_wire2str_opcode_buf(i, nm, sizeof(nm));
@@ -317,7 +333,7 @@ static void print_extended(struct stats_info* s)
 	PR_UL("num.query.edns.DO", s->svr.qEDNS_DO);
 
 	/* RCODE */
-	for(i=0; i<STATS_RCODE_NUM; i++) {
+	for(i=0; i<UB_STATS_RCODE_NUM; i++) {
 		/* Always include RCODEs 0-5 */
 		if(inhibit_zero && i > LDNS_RCODE_REFUSED && s->svr.ans_rcode[i] == 0)
 			continue;
@@ -327,6 +343,8 @@ static void print_extended(struct stats_info* s)
 	if(!inhibit_zero || s->svr.ans_rcode_nodata) {
 		PR_UL("num.answer.rcode.nodata", s->svr.ans_rcode_nodata);
 	}
+	/* iteration */
+	PR_UL("num.query.ratelimited", s->svr.queries_ratelimited);
 	/* validation */
 	PR_UL("num.answer.secure", s->svr.ans_secure);
 	PR_UL("num.answer.bogus", s->svr.ans_bogus);
@@ -339,14 +357,23 @@ static void print_extended(struct stats_info* s)
 	PR_UL("rrset.cache.count", s->svr.rrset_cache_count);
 	PR_UL("infra.cache.count", s->svr.infra_cache_count);
 	PR_UL("key.cache.count", s->svr.key_cache_count);
+#ifdef USE_DNSCRYPT
+	PR_UL("dnscrypt_shared_secret.cache.count",
+			 s->svr.shared_secret_cache_count);
+	PR_UL("num.query.dnscrypt.shared_secret.cachemiss",
+			 s->svr.num_query_dnscrypt_secret_missed_cache);
+	PR_UL("dnscrypt_nonce.cache.count", s->svr.nonce_cache_count);
+	PR_UL("num.query.dnscrypt.replay",
+			 s->svr.num_query_dnscrypt_replay);
+#endif /* USE_DNSCRYPT */
 }
 
 /** print statistics out of memory structures */
-static void do_stats_shm(struct config_file* cfg, struct stats_info* stats,
-	struct shm_stat_info* shm_stat)
+static void do_stats_shm(struct config_file* cfg, struct ub_stats_info* stats,
+	struct ub_shm_stat_info* shm_stat)
 {
 	int i;
-	char nm[16];
+	char nm[32];
 	for(i=0; i<cfg->num_threads; i++) {
 		snprintf(nm, sizeof(nm), "thread%d", i);
 		pr_stats(nm, &stats[i+1]);
@@ -366,8 +393,8 @@ static void print_stats_shm(const char* cfgfile)
 {
 #ifdef HAVE_SHMGET
 	struct config_file* cfg;
-	struct stats_info* stats;
-	struct shm_stat_info* shm_stat;
+	struct ub_stats_info* stats;
+	struct ub_shm_stat_info* shm_stat;
 	int id_ctl, id_arr;
 	/* read config */
 	if(!(cfg = config_create()))
@@ -383,11 +410,11 @@ static void print_stats_shm(const char* cfgfile)
 	if(id_arr == -1) {
 		fatal_exit("shmget(%d): %s", cfg->shm_key+1, strerror(errno));
 	}
-	shm_stat = (struct shm_stat_info*)shmat(id_ctl, NULL, 0);
+	shm_stat = (struct ub_shm_stat_info*)shmat(id_ctl, NULL, 0);
 	if(shm_stat == (void*)-1) {
 		fatal_exit("shmat(%d): %s", id_ctl, strerror(errno));
 	}
-	stats = (struct stats_info*)shmat(id_arr, NULL, 0);
+	stats = (struct ub_stats_info*)shmat(id_arr, NULL, 0);
 	if(stats == (void*)-1) {
 		fatal_exit("shmat(%d): %s", id_arr, strerror(errno));
 	}
@@ -699,7 +726,7 @@ int main(int argc, char* argv[])
 	WSADATA wsa_data;
 #endif
 #ifdef USE_THREAD_DEBUG
-	/* stop the file output from unbound-control, overwites the servers */
+	/* stop the file output from unbound-control, overwrites the servers */
 	extern int check_locking_order;
 	check_locking_order = 0;
 #endif /* USE_THREAD_DEBUG */
@@ -753,7 +780,9 @@ int main(int argc, char* argv[])
 #ifdef HAVE_ERR_LOAD_CRYPTO_STRINGS
 	ERR_load_crypto_strings();
 #endif
+#if OPENSSL_VERSION_NUMBER < 0x10100000 || !defined(HAVE_OPENSSL_INIT_SSL)
 	ERR_load_SSL_strings();
+#endif
 #if OPENSSL_VERSION_NUMBER < 0x10100000 || !defined(HAVE_OPENSSL_INIT_CRYPTO)
 	OpenSSL_add_all_algorithms();
 #else
@@ -764,7 +793,7 @@ int main(int argc, char* argv[])
 #if OPENSSL_VERSION_NUMBER < 0x10100000 || !defined(HAVE_OPENSSL_INIT_SSL)
 	(void)SSL_library_init();
 #else
-	(void)OPENSSL_init_ssl(0, NULL);
+	(void)OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS, NULL);
 #endif
 
 	if(!RAND_status()) {

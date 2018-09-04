@@ -45,7 +45,7 @@ If you want to help out, see [CONTRIBUTING](CONTRIBUTING.md) for a set of guidel
 | ------------------------------ | -----------| ----------------- | ---------------------------------------------------------------------------------- |
 | 0                       | 22-07-2018 | v1                 |  Genesis block       |
 | 1                       | 22-07-2018 | v7                 |  Start of the blockchain       |
-| 94740                   | 01-10-2018 | v8                 | Adding public transactions (transactions with mixin 0)       |
+| 95000                   | 01-10-2018 | v8                 | Adding public transactions (transactions with mixin 0)       |
 
 Note future releases block heights and dates may change, so make sure to frequently check github, our website, the forums, etc. for the most up to date information.
 
@@ -81,6 +81,7 @@ library archives (`.a`).
 | GTest        | 1.5           | YES      | `libgtest-dev`^    | `gtest`      | `gtest-devel`     | YES      | Test suite     |
 | Doxygen      | any           | NO       | `doxygen`          | `doxygen`    | `doxygen`         | YES      | Documentation  |
 | Graphviz     | any           | NO       | `graphviz`         | `graphviz`   | `graphviz`        | YES      | Documentation  |
+| pcsclite     | ?             | NO       | `libpcsclite-dev`  | ?            | `pcsc-lite pcsc-lite-devel` | NO | Ledger     |          
 
 
 [^] On Debian/Ubuntu `libgtest-dev` only includes sources and headers. You must

@@ -1,4 +1,4 @@
-# Copyright (c) 2014-2018, The Monero Project
+# Copyright (c) 2018 XCash Project, Derived from 2014-2018, The Monero Project
 #
 # All rights reserved.
 #
@@ -56,6 +56,7 @@ option(USE_ECDSA "Use ECDSA algorithms" ON)
 option(USE_SHA2 "Enable SHA2 support" ON)
 option(USE_SHA1 "Enable SHA1 support" ON)
 set(ENABLE_DNSTAP 0)
+set(ENABLE_DNSCRYPT 0)
 set(HAVE_SSL 1)
 if (CMAKE_USE_PTHREADS_INIT AND NOT CMAKE_USE_WIN32_THREADS_INIT)
   set(HAVE_PTHREAD 1)
@@ -82,8 +83,12 @@ configure_file(
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/dnstap/dnstap_config.h.in"
   "${CMAKE_CURRENT_BINARY_DIR}/dnstap/dnstap_config.h")
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/dnscrypt/dnscrypt_config.h.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/dnscrypt/dnscrypt_config.h")
 
 set(common_src
+  services/authzone.c
   services/cache/dns.c
   services/cache/infra.c
   services/cache/rrset.c

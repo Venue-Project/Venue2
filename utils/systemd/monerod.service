@@ -1,5 +1,5 @@
 [Unit]
-Description=XCash Full Node
+Description=X-CASH Full Node
 After=network.target
 
 [Service]

@@ -1,4 +1,4 @@
-# XCash Blockchain Utilities
+# X-CASH Blockchain Utilities
 
 Copyright (c) 2018 X-CASH Project, Derived from 2014-2018, The Monero Project
 

@@ -100,7 +100,7 @@ namespace daemonizer
     }
     else
     {
-      //LOG_PRINT_L0("XCash '" << XCASH_RELEASE_NAME << "' (v" << XCASH_VERSION_FULL);
+      //LOG_PRINT_L0("X-CASH '" << XCASH_RELEASE_NAME << "' (v" << XCASH_VERSION_FULL);
       return executor.run_interactive(vm);
     }
   }

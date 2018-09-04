@@ -79,6 +79,10 @@
    don't. */
 #undef HAVE_DECL_INET_PTON
 
+/* Define to 1 if you have the declaration of `NID_ED25519', and to 0 if you
+   don't. */
+#undef HAVE_DECL_NID_ED25519
+
 /* Define to 1 if you have the declaration of `NID_secp384r1', and to 0 if you
    don't. */
 #undef HAVE_DECL_NID_SECP384R1
@@ -156,6 +160,9 @@
 
 /* Define to 1 if you have the `EVP_cleanup' function. */
 #undef HAVE_EVP_CLEANUP
+
+/* Define to 1 if you have the `EVP_DigestVerify' function. */
+#undef HAVE_EVP_DIGESTVERIFY
 
 /* Define to 1 if you have the `EVP_dss1' function. */
 #undef HAVE_EVP_DSS1
@@ -289,6 +296,9 @@
 /* Define to 1 if you have the <nettle/dsa-compat.h> header file. */
 #undef HAVE_NETTLE_DSA_COMPAT_H
 
+/* Define to 1 if you have the <nettle/eddsa.h> header file. */
+#undef HAVE_NETTLE_EDDSA_H
+
 /* Use libnss for crypto */
 #undef HAVE_NSS
 
@@ -414,6 +424,12 @@
 
 /* Define to 1 if you have the `SSL_CTX_set_security_level' function. */
 #undef HAVE_SSL_CTX_SET_SECURITY_LEVEL
+
+/* Define to 1 if you have the `SSL_get0_peername' function. */
+#undef HAVE_SSL_GET0_PEERNAME
+
+/* Define to 1 if you have the `SSL_set1_host' function. */
+#undef HAVE_SSL_SET1_HOST
 
 /* Define to 1 if you have the <stdarg.h> header file. */
 #undef HAVE_STDARG_H
@@ -636,6 +652,9 @@
 /* define if (v)snprintf does not return length needed, (but length used) */
 #undef SNPRINTF_RET_BROKEN
 
+/* Define to 1 if libsodium supports sodium_set_misuse_handler */
+#undef SODIUM_MISUSE_HANDLER
+
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
 
@@ -666,6 +685,9 @@
 /* Define to 1 to enable dnscrypt support */
 #undef USE_DNSCRYPT
 
+/* Define to 1 to enable dnscrypt with xchacha20 support */
+#undef USE_DNSCRYPT_XCHACHA20
+
 /* Define to 1 to enable dnstap support */
 #undef USE_DNSTAP
 
@@ -678,8 +700,14 @@
 /* Define this to enable an EVP workaround for older openssl */
 #undef USE_ECDSA_EVP_WORKAROUND
 
+/* Define this to enable ED25519 support. */
+#undef USE_ED25519
+
 /* Define this to enable GOST support. */
 #undef USE_GOST
+
+/* Define to 1 to use ipsecmod support. */
+#undef USE_IPSECMOD
 
 /* Define if you want to use internal select based events */
 #undef USE_MINI_EVENT
@@ -1128,6 +1156,7 @@ uint32_t arc4random(void);
 void arc4random_buf(void* buf, size_t n);
 void _ARC4_LOCK(void);
 void _ARC4_UNLOCK(void);
+void _ARC4_LOCK_DESTROY(void);
 #endif
 #ifndef HAVE_ARC4RANDOM_UNIFORM
 uint32_t arc4random_uniform(uint32_t upper_bound);

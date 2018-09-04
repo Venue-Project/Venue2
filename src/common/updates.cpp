@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018, The Monero Project
+// Copyright (c) 2017-2018, The X-CASH Project
 // 
 // All rights reserved.
 // 
@@ -44,7 +44,7 @@ namespace tools
 
     MDEBUG("Checking updates for " << buildtag << " " << software);
 
-    // All four XCashPulse domains have DNSSEC on and valid
+    // All four X-CASHPulse domains have DNSSEC on and valid
     static const std::vector<std::string> dns_urls = {
         "updates.xcashpulse.org",
         "updates.xcashpulse.net",

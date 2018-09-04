@@ -1,4 +1,4 @@
-// Copyright (c) 2017-2018, The Monero Project
+// Copyright (c) 2017-2018, The X-CASH Project
 //
 // All rights reserved.
 //
@@ -104,12 +104,12 @@ int main(int argc, char* argv[])
   SL(tools::wallet2::unsigned_tx_set);
   SL(tools::wallet2::signed_tx_set);
 
-  SL(XCash::WalletImpl);
-  SL(XCash::AddressBookRow);
-  SL(XCash::TransactionInfoImpl);
-  SL(XCash::TransactionHistoryImpl);
-  SL(XCash::PendingTransactionImpl);
-  SL(XCash::UnsignedTransactionImpl);
+  SL(X-CASH::WalletImpl);
+  SL(X-CASH::AddressBookRow);
+  SL(X-CASH::TransactionInfoImpl);
+  SL(X-CASH::TransactionHistoryImpl);
+  SL(X-CASH::PendingTransactionImpl);
+  SL(X-CASH::UnsignedTransactionImpl);
 
   return 0;
 }

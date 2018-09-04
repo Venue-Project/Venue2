@@ -40,7 +40,7 @@
 
 namespace daemonize
 {
-  std::string const t_executor::NAME = "XCash Daemon";
+  std::string const t_executor::NAME = "X-CASH Daemon";
 
   void t_executor::init_options(
       boost::program_options::options_description & configurable_options
@@ -58,7 +58,7 @@ namespace daemonize
       boost::program_options::variables_map const & vm
     )
   {
-    LOG_PRINT_L0("XCash '" << XCASH_RELEASE_NAME << "' (v" << XCASH_VERSION_FULL << ") Daemonised");
+    LOG_PRINT_L0("X-CASH '" << XCASH_RELEASE_NAME << "' (v" << XCASH_VERSION_FULL << ") Daemonised");
     return t_daemon{vm};
   }
 

@@ -2,7 +2,7 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>XCash::AddressBookImpl</name>
+    <name>X-CASH::AddressBookImpl</name>
     <message>
         <location filename="../src/wallet/api/address_book.cpp" line="53"/>
         <source>Invalid destination address</source>
@@ -25,7 +25,7 @@
     </message>
 </context>
 <context>
-    <name>XCash::PendingTransactionImpl</name>
+    <name>X-CASH::PendingTransactionImpl</name>
     <message>
         <location filename="../src/wallet/api/pending_transaction.cpp" line="90"/>
         <source>Attempting to save transaction to file, but specified file(s) exist. Exiting to not risk overwriting. File:</source>
@@ -68,7 +68,7 @@
     </message>
 </context>
 <context>
-    <name>XCash::UnsignedTransactionImpl</name>
+    <name>X-CASH::UnsignedTransactionImpl</name>
     <message>
         <location filename="../src/wallet/api/unsigned_transaction.cpp" line="75"/>
         <source>This is a watch only wallet</source>
@@ -122,7 +122,7 @@
     </message>
 </context>
 <context>
-    <name>XCash::WalletImpl</name>
+    <name>X-CASH::WalletImpl</name>
     <message>
         <location filename="../src/wallet/api/wallet.cpp" line="1111"/>
         <source>payment id has invalid format, expected 16 or 64 character hex string: </source>
@@ -3781,7 +3781,7 @@ Utgångar per *: </translation>
         <location filename="../src/simplewallet/simplewallet.cpp" line="6787"/>
         <source>This is the command line xcash wallet. It needs to connect to a xcash
 daemon to work correctly.</source>
-        <translation>Detta är kommandoradsplånboken för XCash. Den måste ansluta till en XCash-
+        <translation>Detta är kommandoradsplånboken för X-CASH. Den måste ansluta till en X-CASH-
 daemon för att fungera korrekt.</translation>
     </message>
     <message>
@@ -4025,7 +4025,7 @@ daemon för att fungera korrekt.</translation>
         <location filename="../src/wallet/wallet_rpc_server.cpp" line="2870"/>
         <source>This is the RPC xcash wallet. It needs to connect to a xcash
 daemon to work correctly.</source>
-        <translation>Detta är RPC-plånboken för xcash. Den måste ansluta till en XCash-
+        <translation>Detta är RPC-plånboken för xcash. Den måste ansluta till en X-CASH-
 daemon för att fungera korrekt.</translation>
     </message>
     <message>
@@ -4134,7 +4134,7 @@ daemon för att fungera korrekt.</translation>
         <location filename="../src/wallet/wallet_args.cpp" line="138"/>
         <source>This is the command line xcash wallet. It needs to connect to a xcash
 daemon to work correctly.</source>
-        <translation>Detta är kommandoradsplånboken för XCash. Den måste ansluta till en XCash-
+        <translation>Detta är kommandoradsplånboken för X-CASH. Den måste ansluta till en X-CASH-
 daemon för att fungera korrekt.</translation>
     </message>
     <message>

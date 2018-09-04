@@ -167,7 +167,7 @@ create_udp_sock(int family, int socktype, struct sockaddr* addr,
 	int freebind, int use_systemd)
 {
 	int s;
-#if defined(SO_REUSEADDR) || defined(SO_REUSEPORT) || defined(IPV6_USE_MIN_MTU)  || defined(IP_TRANSPARENT) || defined(IP_BINDANY) || defined(IP_FREEBIND)
+#if defined(SO_REUSEADDR) || defined(SO_REUSEPORT) || defined(IPV6_USE_MIN_MTU)  || defined(IP_TRANSPARENT) || defined(IP_BINDANY) || defined(IP_FREEBIND) || defined (SO_BINDANY)
 	int on=1;
 #endif
 #ifdef IPV6_MTU
@@ -182,7 +182,7 @@ create_udp_sock(int family, int socktype, struct sockaddr* addr,
 #ifndef IPV6_V6ONLY
 	(void)v6only;
 #endif
-#if !defined(IP_TRANSPARENT) && !defined(IP_BINDANY)
+#if !defined(IP_TRANSPARENT) && !defined(IP_BINDANY) && !defined(SO_BINDANY)
 	(void)transparent;
 #endif
 #if !defined(IP_FREEBIND)
@@ -281,7 +281,14 @@ create_udp_sock(int family, int socktype, struct sockaddr* addr,
 			log_warn("setsockopt(.. IP%s_BINDANY ..) failed: %s",
 			(family==AF_INET6?"V6":""), strerror(errno));
 		}
-#endif /* IP_TRANSPARENT || IP_BINDANY */
+#elif defined(SO_BINDANY)
+		if (transparent &&
+		    setsockopt(s, SOL_SOCKET, SO_BINDANY, (void*)&on,
+		    (socklen_t)sizeof(on)) < 0) {
+			log_warn("setsockopt(.. SO_BINDANY ..) failed: %s",
+			strerror(errno));
+		}
+#endif /* IP_TRANSPARENT || IP_BINDANY || SO_BINDANY */
 	}
 #ifdef IP_FREEBIND
 	if(freebind &&
@@ -592,7 +599,7 @@ create_tcp_accept_sock(struct addrinfo *addr, int v6only, int* noproto,
 	int* reuseport, int transparent, int mss, int freebind, int use_systemd)
 {
 	int s;
-#if defined(SO_REUSEADDR) || defined(SO_REUSEPORT) || defined(IPV6_V6ONLY) || defined(IP_TRANSPARENT) || defined(IP_BINDANY) || defined(IP_FREEBIND)
+#if defined(SO_REUSEADDR) || defined(SO_REUSEPORT) || defined(IPV6_V6ONLY) || defined(IP_TRANSPARENT) || defined(IP_BINDANY) || defined(IP_FREEBIND) || defined(SO_BINDANY)
 	int on = 1;
 #endif
 #ifdef HAVE_SYSTEMD
@@ -601,7 +608,7 @@ create_tcp_accept_sock(struct addrinfo *addr, int v6only, int* noproto,
 #ifdef USE_TCP_FASTOPEN
 	int qlen;
 #endif
-#if !defined(IP_TRANSPARENT) && !defined(IP_BINDANY)
+#if !defined(IP_TRANSPARENT) && !defined(IP_BINDANY) && !defined(SO_BINDANY)
 	(void)transparent;
 #endif
 #if !defined(IP_FREEBIND)
@@ -736,7 +743,14 @@ create_tcp_accept_sock(struct addrinfo *addr, int v6only, int* noproto,
 		log_warn("setsockopt(.. IP%s_BINDANY ..) failed: %s",
 		(addr->ai_family==AF_INET6?"V6":""), strerror(errno));
 	}
-#endif /* IP_TRANSPARENT || IP_BINDANY */
+#elif defined(SO_BINDANY)
+	if (transparent &&
+	    setsockopt(s, SOL_SOCKET, SO_BINDANY, (void*)&on, (socklen_t)
+	    sizeof(on)) < 0) {
+		log_warn("setsockopt(.. SO_BINDANY ..) failed: %s",
+		strerror(errno));
+	}
+#endif /* IP_TRANSPARENT || IP_BINDANY || SO_BINDANY */
 	if(
 #ifdef HAVE_SYSTEMD
 		!got_fd_from_systemd &&
@@ -792,7 +806,12 @@ create_tcp_accept_sock(struct addrinfo *addr, int v6only, int* noproto,
 #endif
 	if ((setsockopt(s, IPPROTO_TCP, TCP_FASTOPEN, &qlen, 
 		  sizeof(qlen))) == -1 ) {
-		log_err("Setting TCP Fast Open as server failed: %s", strerror(errno));
+#ifdef ENOPROTOOPT
+		/* squelch ENOPROTOOPT: freebsd server mode with kernel support
+		   disabled, except when verbosity enabled for debugging */
+		if(errno != ENOPROTOOPT || verbosity >= 3)
+#endif
+		  log_err("Setting TCP Fast Open as server failed: %s", strerror(errno));
 	}
 #endif
 	return s;
@@ -1223,15 +1242,15 @@ listen_create(struct comm_base* base, struct listen_port* ports,
 			ports->ftype == listen_type_tcp_dnscrypt ||
 			ports->ftype == listen_type_udpancil_dnscrypt) {
 			cp->dnscrypt = 1;
-            cp->dnscrypt_buffer = sldns_buffer_new(bufsize);
-            if(!cp->dnscrypt_buffer) {
-                log_err("can't alloc dnscrypt_buffer");
-                comm_point_delete(cp);
-                listen_delete(front);
-                return NULL;
-            }
-            front->dnscrypt_udp_buff = cp->dnscrypt_buffer;
-        }
+			cp->dnscrypt_buffer = sldns_buffer_new(bufsize);
+			if(!cp->dnscrypt_buffer) {
+				log_err("can't alloc dnscrypt_buffer");
+				comm_point_delete(cp);
+				listen_delete(front);
+				return NULL;
+			}
+			front->dnscrypt_udp_buff = cp->dnscrypt_buffer;
+		}
 #endif
 		if(!listen_cp_insert(cp, front)) {
 			log_err("malloc failed");
@@ -1269,10 +1288,10 @@ listen_delete(struct listen_dnsport* front)
 		return;
 	listen_list_delete(front->cps);
 #ifdef USE_DNSCRYPT
-    if(front->dnscrypt_udp_buff &&
-       front->udp_buff != front->dnscrypt_udp_buff) {
-        sldns_buffer_free(front->dnscrypt_udp_buff);
-    }
+	if(front->dnscrypt_udp_buff &&
+		front->udp_buff != front->dnscrypt_udp_buff) {
+		sldns_buffer_free(front->dnscrypt_udp_buff);
+	}
 #endif
 	sldns_buffer_free(front->udp_buff);
 	free(front);
