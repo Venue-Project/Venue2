@@ -95,8 +95,8 @@ static const struct {
   // version 7 starts from block 1, which is on or around July 18, 2018. This version includes the new POW cryptonight_v7 algorithm.
   { 7, 1, 0, 1531962000 },
 
-  // version 8 starts from block 95000, which is on or around Oct 1, 2018. This version includes 0 mixin transactions and a new variable fee formula.
-  { 8, 95000, 0, 1537920000 },
+  // version 8 starts from block 157000, which is on or around Nov 14, 2018. This version includes bullet proofs, a substantial increase in the ringsize, a fixed ring size, and a few other items.
+  { 8, 157000, 0, 1541809000 },
 };
 static const uint64_t mainnet_hard_fork_version_1_till = 1;
 
@@ -112,8 +112,8 @@ static const struct {
   // version 7 starts from block 1, which is on or around July 18, 2018. This version includes the new POW cryptonight_v7 algorithm.
   { 7, 1, 0, 1531962000 },
 
-  // version 8 starts from block 83000, which is on or around Sept 24, 2018. This version includes 0 mixin transactions and a new variable fee formula.
-  { 8, 83000, 0, 1537315200 },
+  // version 8 starts from block 146000, which is on or around Nov 7, 2018. This version includes bullet proofs, a substantial increase in the ringsize, a fixed ring size, and a few other items.
+  { 8, 146000, 0, 1541203200 },
 };
 static const uint64_t testnet_hard_fork_version_1_till = 1;
 
