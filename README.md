@@ -12,8 +12,8 @@ Portions Copyright (c) 2012-2013 The Cryptonote developers.
 - Reddit: [xcash](https://www.reddit.com/r/xcash/)
 - Twitter: [XCashCrypto](https://twitter.com/XCashCrypto/)
 - Telegram: [xcashglobal](https://t.me/xcashglobal)
-- Discord: [xcash](https://discord.gg/4CAahnd)
-- Medium: [guilhem.c](https://medium.com/@guilhem.c)
+- Discord: [x-cash](https://discord.gg/4CAahnd)
+- Medium: [x-cash](https://medium.com/x-cash)
 - Mail: [accounts@x-cash.org](mailto:accounts@x-cash.org)
 - GitHub: [https://github.com/X-CASH-official/X-CASH](https://github.com/X-CASH-official/X-CASH)
 
