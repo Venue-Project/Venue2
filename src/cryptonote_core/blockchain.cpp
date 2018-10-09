@@ -95,8 +95,10 @@ static const struct {
   // version 7 starts from block 1, which is on or around July 18, 2018. This version includes the new POW cryptonight_v7 algorithm.
   { 7, 1, 0, 1531962000 },
 
-  // version 8 starts from block 157000, which is on or around Nov 14, 2018. This version includes bullet proofs, a substantial increase in the ringsize, a fixed ring size, and a few other items.
-  { 8, 157000, 0, 1541809000 },
+  // version 8 starts from block 95085, which is on or around Oct 8, 2018. This version includes a new difficulty algorithm.
+  { 8, 95085, 0, 1538524800 },
+
+  // version 9 starts from block 157000, which is on or around Nov 14, 2018. This version includes bullet proofs, public transactions,  a substantial increase in the ringsize, a fixed ring size, and a few other items.
 };
 static const uint64_t mainnet_hard_fork_version_1_till = 1;
 
@@ -112,8 +114,10 @@ static const struct {
   // version 7 starts from block 1, which is on or around July 18, 2018. This version includes the new POW cryptonight_v7 algorithm.
   { 7, 1, 0, 1531962000 },
 
-  // version 8 starts from block 146000, which is on or around Nov 7, 2018. This version includes bullet proofs, a substantial increase in the ringsize, a fixed ring size, and a few other items.
-  { 8, 146000, 0, 1541203200 },
+  // version 8 starts from block 105000, which is on or around Oct 8, 2018. This version includes a new difficulty algorithm.
+  { 8, 105000, 0, 1538524800 },
+
+  // version 9 starts from block 146000, which is on or around Nov 14, 2018. This version includes bullet proofs, public transactions,  a substantial increase in the ringsize, a fixed ring size, and a few other items.
 };
 static const uint64_t testnet_hard_fork_version_1_till = 1;
 
@@ -784,11 +788,16 @@ bool Blockchain::get_block_by_hash(const crypto::hash &h, block &blk, bool *orph
 // less blocks than desired if there aren't enough.
 difficulty_type Blockchain::get_difficulty_for_next_block()
 {
+  difficulty_type diff;
+  uint64_t block_height = m_db->height();
+  uint8_t version = get_current_hard_fork_version();
+  if (version < HF_VERSION_LWMA_DIFFICULTY)
+  {
   LOG_PRINT_L3("Blockchain::" << __func__);
   CRITICAL_REGION_LOCAL(m_blockchain_lock);
   std::vector<uint64_t> timestamps;
   std::vector<difficulty_type> difficulties;
-  auto height = m_db->height();
+  auto height = m_db->height();  
   // ND: Speedup
   // 1. Keep a list of the last 735 (or less) blocks that is used to compute difficulty,
   //    then when the next block difficulty is queried, push the latest height data and
@@ -799,12 +808,10 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
     uint64_t index = height - 1;
     m_timestamps.push_back(m_db->get_block_timestamp(index));
     m_difficulties.push_back(m_db->get_block_cumulative_difficulty(index));
-
     while (m_timestamps.size() > DIFFICULTY_BLOCKS_COUNT)
       m_timestamps.erase(m_timestamps.begin());
     while (m_difficulties.size() > DIFFICULTY_BLOCKS_COUNT)
       m_difficulties.erase(m_difficulties.begin());
-
     m_timestamps_and_difficulties_height = height;
     timestamps = m_timestamps;
     difficulties = m_difficulties;
@@ -814,7 +821,6 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
     size_t offset = height - std::min < size_t > (height, static_cast<size_t>(DIFFICULTY_BLOCKS_COUNT));
     if (offset == 0)
       ++offset;
-
     timestamps.clear();
     difficulties.clear();
     for (; offset < height; offset++)
@@ -822,13 +828,64 @@ difficulty_type Blockchain::get_difficulty_for_next_block()
       timestamps.push_back(m_db->get_block_timestamp(offset));
       difficulties.push_back(m_db->get_block_cumulative_difficulty(offset));
     }
-
     m_timestamps_and_difficulties_height = height;
     m_timestamps = timestamps;
     m_difficulties = difficulties;
   }
   size_t target = get_difficulty_target();
-  return next_difficulty(timestamps, difficulties, target);
+  diff = next_difficulty(timestamps, difficulties, target);
+  }
+if (version >= HF_VERSION_LWMA_DIFFICULTY)
+  {
+  LOG_PRINT_L3("Blockchain::" << __func__);
+  CRITICAL_REGION_LOCAL(m_blockchain_lock);
+  std::vector<uint64_t> timestamps;
+  std::vector<difficulty_type> difficulties;
+  auto height = m_db->height();
+  size_t difficulty_blocks_count = DIFFICULTY_BLOCKS_COUNT_V8;
+  // ND: Speedup
+  // 1. Keep a list of the last 735 (or less) blocks that is used to compute difficulty,
+  //    then when the next block difficulty is queried, push the latest height data and
+  //    pop the oldest one from the list. This only requires 1x read per height instead
+  //    of doing 735 (DIFFICULTY_BLOCKS_COUNT).
+  if (m_timestamps_and_difficulties_height != 0 && ((height - m_timestamps_and_difficulties_height) == 1) && m_timestamps.size() >= difficulty_blocks_count)
+  {
+    uint64_t index = height - 1;
+    m_timestamps.push_back(m_db->get_block_timestamp(index));
+    m_difficulties.push_back(m_db->get_block_cumulative_difficulty(index));
+    while (m_timestamps.size() > difficulty_blocks_count)
+      m_timestamps.erase(m_timestamps.begin());
+    while (m_difficulties.size() > difficulty_blocks_count)
+      m_difficulties.erase(m_difficulties.begin());
+    m_timestamps_and_difficulties_height = height;
+    timestamps = m_timestamps;
+    difficulties = m_difficulties;
+  }
+  else
+  {
+    size_t offset = height - std::min < size_t > (height, static_cast<size_t>(difficulty_blocks_count));
+    if (offset == 0)
+      ++offset;
+    timestamps.clear();
+    difficulties.clear();
+    if (height > offset)
+    {
+      timestamps.reserve(height - offset);
+      difficulties.reserve(height - offset);
+    }
+    for (; offset < height; offset++)
+    {
+      timestamps.push_back(m_db->get_block_timestamp(offset));
+      difficulties.push_back(m_db->get_block_cumulative_difficulty(offset));
+    }
+    m_timestamps_and_difficulties_height = height;
+    m_timestamps = timestamps;
+    m_difficulties = difficulties;
+  }
+  size_t target = get_difficulty_target();
+  diff = next_difficulty_V8(timestamps, difficulties, block_height);
+  }
+return diff;
 }
 //------------------------------------------------------------------
 // This function removes blocks from the blockchain until it gets to the
@@ -2487,12 +2544,12 @@ bool Blockchain::check_tx_outputs(const transaction& tx, tx_verification_context
     }
   }
 
-  // from v8, allow bulletproofs
-  if (hf_version < 8) {
+  // from v9, allow bulletproofs
+  if (hf_version < 9) {
     const bool bulletproof = tx.rct_signatures.type == rct::RCTTypeFullBulletproof || tx.rct_signatures.type == rct::RCTTypeSimpleBulletproof;
     if (bulletproof || !tx.rct_signatures.p.bulletproofs.empty())
     {
-      MERROR("Bulletproofs are not allowed before v8");
+      MERROR("Bulletproofs are not allowed before v9");
       tvc.m_invalid_output = true;
       return false;
     }
