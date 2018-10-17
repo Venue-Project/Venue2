@@ -46,7 +46,7 @@ If you want to help out, see [CONTRIBUTING](CONTRIBUTING.md) for a set of guidel
 | 0                       | 22-07-2018 | v1                 |  Genesis block       |
 | 1                       | 22-07-2018 | v7                 |  Start of the blockchain       |
 | 95085                   | 08-10-2018 | v8                 | changing difficulty algorithm to [LWMA-2 developed by Zawy12](https://github.com/zawy12/difficulty-algorithms/issues/3)       |
-| 106000                  | 01-11-2018 | v9                 | Adjusting the new difficulty algorithm       |
+| 106000                  | 16-10-2018 | v9                 | Adjusting the new difficulty algorithm       |
 | 145000                  | 01-11-2018 | v10                 | Adding public transactions, bullet proofs, increased and static ringsize and more!       |
 
 Note future releases block heights and dates may change, so make sure to frequently check github, our website, the forums, etc. for the most up to date information.
