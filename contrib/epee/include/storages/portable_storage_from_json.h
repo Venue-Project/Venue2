@@ -49,6 +49,7 @@ namespace epee
       inline void run_handler(typename t_storage::hsection current_section, std::string::const_iterator& sec_buf_begin, std::string::const_iterator buf_end, t_storage& stg, unsigned int recursion)
       {
         CHECK_AND_ASSERT_THROW_MES(recursion < EPEE_JSON_RECURSION_LIMIT_INTERNAL, "Wrong JSON data: recursion limitation (" << EPEE_JSON_RECURSION_LIMIT_INTERNAL << ") exceeded");
+
         std::string::const_iterator sub_element_start;
         std::string name;        
         typename t_storage::harray h_array = nullptr;

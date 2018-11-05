@@ -159,18 +159,10 @@ namespace cryptonote
     return true;
   }
 
-bool checkpoints::init_default_checkpoints(network_type nettype)
+  bool checkpoints::init_default_checkpoints(network_type nettype)
   {
-    if (nettype == TESTNET)
-    {
-      return true;
-    }
-    if (nettype == STAGENET)
-    {
-      return true;
-    }
     return true;
-}
+  }
 
   bool checkpoints::load_checkpoints_from_json(const std::string &json_hashfile_fullpath)
   {

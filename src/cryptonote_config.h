@@ -65,9 +65,11 @@
 
 #define FEE_PER_KB_OLD                                  ((uint64_t)10000) // pow(10, 4)
 #define FEE_PER_KB                                      ((uint64_t)2000) // 2 * pow(10, 3)
+#define FEE_PER_BYTE                                    ((uint64_t)10)
 #define DYNAMIC_FEE_PER_KB_BASE_FEE                     ((uint64_t)2000) // 2 * pow(10,3)
 #define DYNAMIC_FEE_PER_KB_BASE_BLOCK_REWARD            ((uint64_t)1000000) // 10 * pow(10,6)
 #define DYNAMIC_FEE_PER_KB_BASE_FEE_V5                  ((uint64_t)1) //((uint64_t)2000 * (uint64_t)CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V2 / CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V5)
+#define DYNAMIC_FEE_REFERENCE_TRANSACTION_WEIGHT        ((uint64_t)3000)
 
 #define ORPHANED_BLOCKS_MAX_COUNT                       100
 
@@ -100,6 +102,13 @@
 #define CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT_V9           60*4
 #define BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW_V9            30
 #define DIFFICULTY_TARGET_V9                            60  // seconds
+
+// LWMA difficulty V10
+#define DIFFICULTY_WINDOW_V10                            120
+#define DIFFICULTY_BLOCKS_COUNT_V10                      121
+#define CRYPTONOTE_BLOCK_FUTURE_TIME_LIMIT_V10           60*4
+#define BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW_V10            11
+#define DIFFICULTY_TARGET_V10                            60  // seconds
 
 
 #define CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_SECONDS_V1   DIFFICULTY_TARGET_V1 * CRYPTONOTE_LOCKED_TX_ALLOWED_DELTA_BLOCKS
@@ -153,18 +162,18 @@
 #define THREAD_STACK_SIZE                       5 * 1024 * 1024
 
 #define HF_VERSION_DYNAMIC_FEE                  6
-#define HF_VERSION_MIN_MIXIN_4                  1
-#define HF_VERSION_MIN_MIXIN_6                  1
 #define HF_VERSION_ENFORCE_RCT                  6
-
-#define DEFAULT_MIXIN                           1
-#define MAXIMUM_MIXIN                           10
+#define HF_VERSION_BULLETPROOFS                 10
+#define HF_VERSION_MIN_MIXIN_20                 10
+#define HF_VERSION_PER_BYTE_FEE                 10
 
 #define PER_KB_FEE_QUANTIZATION_DECIMALS        8
 
 #define HASH_OF_HASHES_STEP                     256
 
-#define DEFAULT_TXPOOL_MAX_SIZE                 648000000ull // 3 days at 300000, in bytes
+#define DEFAULT_TXPOOL_MAX_WEIGHT               648000000ull // 3 days at 300000, in bytes
+
+#define BULLETPROOF_MAX_OUTPUTS                 16
 
 // New constants are intended to go here
 namespace config
@@ -227,5 +236,61 @@ namespace cryptonote
     STAGENET,
     FAKECHAIN,
     UNDEFINED = 255
+  };
+  struct config_t
+  {
+    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX;
+    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX;
+    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX;
+    uint16_t const P2P_DEFAULT_PORT;
+    uint16_t const RPC_DEFAULT_PORT;
+    uint16_t const ZMQ_RPC_DEFAULT_PORT;
+    boost::uuids::uuid const NETWORK_ID;
+    std::string const GENESIS_TX;
+    uint32_t const GENESIS_NONCE;
+  };
+  inline const config_t& get_config(network_type nettype)
+  {
+    static const config_t mainnet = {
+      ::config::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
+      ::config::CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
+      ::config::CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
+      ::config::P2P_DEFAULT_PORT,
+      ::config::RPC_DEFAULT_PORT,
+      ::config::ZMQ_RPC_DEFAULT_PORT,
+      ::config::NETWORK_ID,
+      ::config::GENESIS_TX,
+      ::config::GENESIS_NONCE
+    };
+    static const config_t testnet = {
+      ::config::testnet::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
+      ::config::testnet::CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
+      ::config::testnet::CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
+      ::config::testnet::P2P_DEFAULT_PORT,
+      ::config::testnet::RPC_DEFAULT_PORT,
+      ::config::testnet::ZMQ_RPC_DEFAULT_PORT,
+      ::config::testnet::NETWORK_ID,
+      ::config::testnet::GENESIS_TX,
+      ::config::testnet::GENESIS_NONCE
+    };
+    static const config_t stagenet = {
+      ::config::stagenet::CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX,
+      ::config::stagenet::CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX,
+      ::config::stagenet::CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX,
+      ::config::stagenet::P2P_DEFAULT_PORT,
+      ::config::stagenet::RPC_DEFAULT_PORT,
+      ::config::stagenet::ZMQ_RPC_DEFAULT_PORT,
+      ::config::stagenet::NETWORK_ID,
+      ::config::stagenet::GENESIS_TX,
+      ::config::stagenet::GENESIS_NONCE
+    };
+    switch (nettype)
+    {
+      case MAINNET: return mainnet;
+      case TESTNET: return testnet;
+      case STAGENET: return stagenet;
+      case FAKECHAIN: return mainnet;
+      default: throw std::runtime_error("Invalid network type");
+    }
   };
 }

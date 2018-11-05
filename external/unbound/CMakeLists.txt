@@ -1,4 +1,4 @@
-# Copyright (c) 2018 XCash Project, Derived from 2014-2018, The Monero Project
+# Copyright (c) 2018 X-CASH Project, Derived from 2014-2018, The Monero Project
 #
 # All rights reserved.
 #
@@ -221,23 +221,6 @@ if (WIN32)
       iphlpapi
       ws2_32)
 endif ()
-
-if (MINGW)
-  # There is no variable for this (probably due to the fact that the pthread
-  # library is implicit with a link in msys).
-  find_library(win32pthread
-    NAMES libwinpthread-1.dll)
-  foreach (input IN LISTS win32pthread OPENSSL_LIBRARIES)
-    # Copy shared libraries into the build tree so that no PATH manipulation is
-    # necessary.
-    get_filename_component(name "${input}" NAME)
-    configure_file(
-      "${input}"
-      "${CMAKE_BINARY_DIR}/bin/${name}"
-      COPYONLY)
-  endforeach ()
-endif ()
-
 
 if (INSTALL_VENDORED_LIBUNBOUND)
     if(IOS)

@@ -1,4 +1,4 @@
-# Copyright (c) 2018 XCash Project, Derived from 2014-2018, The Monero Project
+# Copyright (c) 2018 X-CASH Project, Derived from 2014-2018, The Monero Project
 # 
 # All rights reserved.
 # 
@@ -38,14 +38,15 @@
 find_package(Miniupnpc REQUIRED)
 
 message(STATUS "Using in-tree miniupnpc")
-
 add_subdirectory(miniupnp/miniupnpc)
-
 set_property(TARGET libminiupnpc-static PROPERTY FOLDER "external")
 if(MSVC)
   set_property(TARGET libminiupnpc-static APPEND_STRING PROPERTY COMPILE_FLAGS " -wd4244 -wd4267")
 elseif(NOT MSVC)
   set_property(TARGET libminiupnpc-static APPEND_STRING PROPERTY COMPILE_FLAGS " -Wno-undef -Wno-unused-result -Wno-unused-value")
+endif()
+if(CMAKE_SYSTEM_NAME MATCHES "NetBSD")
+	set_property(TARGET libminiupnpc-static APPEND_STRING PROPERTY COMPILE_FLAGS " -D_NETBSD_SOURCE")
 endif()
 
 set(UPNP_LIBRARIES "libminiupnpc-static" PARENT_SCOPE)
