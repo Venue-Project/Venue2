@@ -19,13 +19,13 @@ Portions Copyright (c) 2012-2013 The Cryptonote developers.
 
 ## Introduction
 
-X-CASH is a cryptocurrency built on Monero v7 with the aim to become and standard in digital payment and transaction settlement. We believe privacy is very important when it comes to managing personal finances, but at the same time banks and institutions need to know the source of the funds for KYC purposes. Therefore, we plan on leaving the users the choice of whether or not they want their transaction to be public. Because we are implementing a worldwide network of dedicated servers, we hope to make the synchronization of the blockchain faster than other cryptocurrencies as well as reducing transaction latency. We believe this network will be a key component in the deployment of the future improvements we plan on adding to the core code. The main characteristics of X-CASH are detailed below:
+X-CASH is a cryptocurrency built on X-CASH v7 with the aim to become and standard in digital payment and transaction settlement. We believe privacy is very important when it comes to managing personal finances, but at the same time banks and institutions need to know the source of the funds for KYC purposes. Therefore, we plan on leaving the users the choice of whether or not they want their transaction to be public. Because we are implementing a worldwide network of dedicated servers, we hope to make the synchronization of the blockchain faster than other cryptocurrencies as well as reducing transaction latency. We believe this network will be a key component in the deployment of the future improvements we plan on adding to the core code. The main characteristics of X-CASH are detailed below:
 
 -    Total Supply: 100,000,000,000
 
 -    Block Time: 1 minute
 
--    Algorithm: Cryptonight v7
+-    Algorithm: Cryptonight v8 (CNv2)
 
 -    Reward: ~100,000 XCA at inception
 
@@ -45,9 +45,10 @@ If you want to help out, see [CONTRIBUTING](CONTRIBUTING.md) for a set of guidel
 | ------------------------------ | -----------| ----------------- | ---------------------------------------------------------------------------------- |
 | 0                       | 22-07-2018 | v1                 |  Genesis block       |
 | 1                       | 22-07-2018 | v7                 |  Start of the blockchain       |
-| 95085                   | 08-10-2018 | v8                 | changing difficulty algorithm to [LWMA-2 developed by Zawy12](https://github.com/zawy12/difficulty-algorithms/issues/3)       |
+| 95085                   | 08-10-2018 | v8                 | Changing difficulty algorithm to [LWMA-2 developed by Zawy12](https://github.com/zawy12/difficulty-algorithms/issues/3)       |
 | 106000                  | 16-10-2018 | v9                 | Adjusting the new difficulty algorithm       |
-| 145000                  | 01-11-2018 | v10                 | Adding public transactions, bullet proofs, increased and static ringsize and more!       |
+| 136000                  | 06-11-2018 | v10                 | Adding public transactions, bullet proofs, fixed ring size of 21 and more!       |
+| 137000                  | 07-11-2018 | v11                 | This version makes sure that all non bullet proof transactions are confirmed before bullet proofs transactions are required.       |
 
 Note future releases block heights and dates may change, so make sure to frequently check github, our website, the forums, etc. for the most up to date information.
 
@@ -227,4 +228,4 @@ and its home is the data directory specified in the [example
 config](utils/conf/xcashd.conf).
 
 If you're on Mac, you may need to add the `--max-concurrency 1` option to
-monero-wallet-cli, and possibly monerod, if you get crashes refreshing.
+xcash-wallet-cli, and possibly xcashd, if you get crashes refreshing.
