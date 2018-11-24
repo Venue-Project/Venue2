@@ -819,7 +819,7 @@ wallet2::wallet2(network_type nettype, uint64_t kdf_rounds, bool unattended):
   m_always_confirm_transfers(true),
   m_print_ring_members(false),
   m_store_tx_info(true),
-  m_default_mixin(0),
+  m_default_mixin(BLOCKCHAIN_DEFAULT_MIXIN),
   m_default_priority(0),
   m_refresh_type(RefreshOptimizeCoinbase),
   m_auto_refresh(true),
@@ -3045,7 +3045,7 @@ bool wallet2::store_keys(const std::string& keys_file_name, const epee::wipeable
   value2.SetInt(m_store_tx_info ? 1 :0);
   json.AddMember("store_tx_info", value2, json.GetAllocator());
 
-  value2.SetUint(m_default_mixin);
+  value2.SetUint(BLOCKCHAIN_DEFAULT_MIXIN);
   json.AddMember("default_mixin", value2, json.GetAllocator());
 
   value2.SetUint(m_default_priority);
@@ -3210,7 +3210,7 @@ bool wallet2::load_keys(const std::string& keys_file_name, const epee::wipeable_
     m_multisig_derivations.clear();
     m_always_confirm_transfers = false;
     m_print_ring_members = false;
-    m_default_mixin = 0;
+    m_default_mixin = BLOCKCHAIN_DEFAULT_MIXIN;
     m_default_priority = 0;
     m_auto_refresh = true;
     m_refresh_type = RefreshType::RefreshDefault;
@@ -3313,9 +3313,8 @@ bool wallet2::load_keys(const std::string& keys_file_name, const epee::wipeable_
     m_print_ring_members = field_print_ring_members;
     GET_FIELD_FROM_JSON_RETURN_ON_ERROR(json, store_tx_keys, int, Int, false, true);
     GET_FIELD_FROM_JSON_RETURN_ON_ERROR(json, store_tx_info, int, Int, false, true);
-    m_store_tx_info = ((field_store_tx_keys != 0) || (field_store_tx_info != 0));
-    GET_FIELD_FROM_JSON_RETURN_ON_ERROR(json, default_mixin, unsigned int, Uint, false, 0);
-    m_default_mixin = field_default_mixin;
+    m_store_tx_info = ((field_store_tx_keys != 0) || (field_store_tx_info != 0));    
+    m_default_mixin = BLOCKCHAIN_DEFAULT_MIXIN;
     GET_FIELD_FROM_JSON_RETURN_ON_ERROR(json, default_priority, unsigned int, Uint, false, 0);
     if (field_default_priority_found)
     {
@@ -9081,12 +9080,7 @@ bool wallet2::use_fork_rules(uint8_t version, int64_t early_blocks) const
 //----------------------------------------------------------------------------------------------------
 uint64_t wallet2::get_upper_transaction_weight_limit() const
 {
-  if (m_upper_transaction_weight_limit > 0)
-  {
-    return m_upper_transaction_weight_limit;
-  }
-  uint64_t full_reward_zone = use_fork_rules(5, 10) ? CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V5 : use_fork_rules(2, 10) ? CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V2 : CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V1;
-  return use_fork_rules(HF_VERSION_PER_BYTE_FEE, 10) == true ? full_reward_zone / 2 - CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE : full_reward_zone - CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE;
+  return m_upper_transaction_weight_limit > 0 ? m_upper_transaction_weight_limit : UPPER_TRANSACTION_SIZE;
 }
 //----------------------------------------------------------------------------------------------------
 std::vector<size_t> wallet2::select_available_outputs(const std::function<bool(const transfer_details &td)> &f) const
