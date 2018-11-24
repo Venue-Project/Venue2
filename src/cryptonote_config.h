@@ -60,6 +60,7 @@
 #define CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V5    300000 //size of block (bytes) after which reward for block calculated using block size - second change, from v5
 #define CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE          600
 #define CRYPTONOTE_DISPLAY_DECIMAL_POINT                6
+#define UPPER_TRANSACTION_SIZE                          149400 // CRYPTONOTE_BLOCK_GRANTED_FULL_REWARD_ZONE_V5 / 2 - CRYPTONOTE_COINBASE_BLOB_RESERVED_SIZE
 // COIN - number of smallest units in one coin
 #define COIN                                            ((uint64_t)1000000) // pow(10, 6)
 
@@ -166,6 +167,8 @@
 #define HF_VERSION_BULLETPROOFS                 10
 #define HF_VERSION_MIN_MIXIN_20                 10
 #define HF_VERSION_PER_BYTE_FEE                 10
+
+#define BLOCKCHAIN_DEFAULT_MIXIN                20
 
 #define PER_KB_FEE_QUANTIZATION_DECIMALS        8
 
