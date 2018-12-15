@@ -1,4 +1,4 @@
-# Copyright (c) 2018 X-CASH Project, Derived from 2014-2018, The Monero Project
+# Copyright (c) 2018 Venue Project, Derived from 2014-2018, The Monero Project
 #
 # All rights reserved.
 #
@@ -298,7 +298,7 @@ if(SANITIZE)
 endif()
 
 # Set default blockchain storage location:
-# memory was the default in Cryptonote before X-CASH implemented LMDB, it still works but is unnecessary.
+# memory was the default in Cryptonote before Venue implemented LMDB, it still works but is unnecessary.
 # set(DATABASE memory)
 set(DATABASE lmdb)
 
