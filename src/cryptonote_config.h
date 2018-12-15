@@ -1,4 +1,4 @@
-// Copyright (c) 2018 X-CASH Project, Derived from 2014-2018, The Monero Project
+// Copyright (c) 2018 Venue Project, 2018 X-CASH Project, Derived from 2014-2018, The Monero Project
 // 
 // All rights reserved.
 // 
@@ -153,12 +153,12 @@
 
 #define ALLOW_DEBUG_COMMANDS
 
-#define CRYPTONOTE_NAME                         "X-CASH"
-#define CRYPTONOTE_POOLDATA_FILENAME            "X-CASH_poolstate.bin"
-#define CRYPTONOTE_BLOCKCHAINDATA_FILENAME      "X-CASH_data.mdb"
-#define CRYPTONOTE_BLOCKCHAINDATA_LOCK_FILENAME "X-CASH_lock.mdb"
-#define P2P_NET_DATA_FILENAME                   "X-CASH_p2pstate.bin"
-#define MINER_CONFIG_FILE_NAME                  "X-CASH_miner_conf.json"
+#define CRYPTONOTE_NAME                         "Venue"
+#define CRYPTONOTE_POOLDATA_FILENAME            "venue_poolstate.bin"
+#define CRYPTONOTE_BLOCKCHAINDATA_FILENAME      "venue_data.mdb"
+#define CRYPTONOTE_BLOCKCHAINDATA_LOCK_FILENAME "venue_lock.mdb"
+#define P2P_NET_DATA_FILENAME                   "venue_p2pstate.bin"
+#define MINER_CONFIG_FILE_NAME                  "venue_miner_conf.json"
 
 #define THREAD_STACK_SIZE                       5 * 1024 * 1024
 
@@ -187,16 +187,16 @@ namespace config
   uint64_t const BASE_REWARD_CLAMP_THRESHOLD = ((uint64_t)100); // pow(10, 2)
   std::string const P2P_REMOTE_DEBUG_TRUSTED_PUB_KEY = "0000000000000000000000000000000000000000000000000000000000000000";
 
-  uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0x5c134;
-  uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x3fc134;
-  uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 42;
-  uint16_t const P2P_DEFAULT_PORT = 18280;
-  uint16_t const RPC_DEFAULT_PORT = 18281;
-  uint16_t const ZMQ_RPC_DEFAULT_PORT = 18282;
+  uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0x22c23a8; // VENue
+  uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x2c23a8; // VENu
+  uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 0x7abe3a8; // VENuE // orig:42;
+  uint16_t const P2P_DEFAULT_PORT = 14219;
+  uint16_t const RPC_DEFAULT_PORT = 14220;
+  uint16_t const ZMQ_RPC_DEFAULT_PORT = 14221;
   boost::uuids::uuid const NETWORK_ID = { {
       0x10 ,0x10, 0x41, 0x53 , 0x48, 0x62 , 0x41, 0x65, 0x17, 0x31, 0x00, 0x82, 0x16, 0xA1, 0xA1, 0x10
     } };
-  std::string const GENESIS_TX = "013c01ff0001b197bcc5c605029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd0880712101f1dde8d8d6c53e9d2e920d6e66432eaff6a85b2d25043fc29ef477b075b143df";
+  std::string const GENESIS_TX = "010a01ff0001ffffffffffff0f029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd08807121016380382bc0a0a604c7c60d93e7b23a4a09b48ae7f670a077339a5f0ce8b98b96";
   uint32_t const GENESIS_NONCE = 10000;
 
   namespace testnet

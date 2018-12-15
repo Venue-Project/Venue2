@@ -12,16 +12,16 @@ See also each utility's "--help" option.
 
 ### Export an existing blockchain database
 
-`$ xcash-blockchain-export`
+`$ venue-blockchain-export`
 
 This loads the existing blockchain and exports it to `$XCASH_DATA_DIR/export/blockchain.raw`
 
 ### Import the exported file
 
-`$ xcash-blockchain-import`
+`$ venue-blockchain-import`
 
 This imports blocks from `$XCASH_DATA_DIR/export/blockchain.raw` (exported using the
-`xcash-blockchain-export` tool as described above) into the current database.
+`venue-blockchain-export` tool as described above) into the current database.
 
 Defaults: `--batch on`, `--batch size 20000`, `--verify on`
 
@@ -30,14 +30,14 @@ Batch size refers to number of blocks and can be adjusted for performance based 
 Verification should only be turned off if importing from a trusted blockchain.
 
 If you encounter an error like "resizing not supported in batch mode", you can just re-run
-the `xcash-blockchain-import` command again, and it will restart from where it left off.
+the `venue-blockchain-import` command again, and it will restart from where it left off.
 
 ```bash
 ## use default settings to import blockchain.raw into database
-$ xcash-blockchain-import
+$ venue-blockchain-import
 
 ## fast import with large batch size, database mode "fastest", verification off
-$ xcash-blockchain-import --batch-size 20000 --database lmdb#fastest --verify off
+$ venue-blockchain-import --batch-size 20000 --database lmdb#fastest --verify off
 
 ```
 
@@ -80,9 +80,9 @@ LMDB flags (more than one may be specified):
 ## Examples:
 
 ```
-$ xcash-blockchain-import --database lmdb#fastest
+$ venue-blockchain-import --database lmdb#fastest
 
-$ xcash-blockchain-import --database lmdb#nosync
+$ venue-blockchain-import --database lmdb#nosync
 
-$ xcash-blockchain-import --database lmdb#nosync,nometasync
+$ venue-blockchain-import --database lmdb#nosync,nometasync
 ```

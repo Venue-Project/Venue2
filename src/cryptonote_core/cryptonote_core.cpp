@@ -428,7 +428,7 @@ namespace cryptonote
       {
         MWARNING("Found old-style blockchain.bin in " << old_files.string());
         MWARNING("X-CASH now uses a new format. You can either remove blockchain.bin to start syncing");
-        MWARNING("the blockchain anew, or use xcash-blockchain-export and xcash-blockchain-import to");
+        MWARNING("the blockchain anew, or use venue-blockchain-export and venue-blockchain-import to");
         MWARNING("convert your existing blockchain.bin to the new format. See README.md for instructions.");
         return false;
       }

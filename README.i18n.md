@@ -1,9 +1,9 @@
 X-CASH daemon internationalization
 ==================================
 
-The X-CASH command line tools can be translated in various languages. If you wish to contribute and need help/support, contact the [X-CASH Localization Workgroup on Taiga](https://taiga.getxcash.org/project/erciccione-xcash-localization/) or come chat on `#xcash-translations` (Freenode/IRC, riot/matrix, MatterMost)
+The X-CASH command line tools can be translated in various languages. If you wish to contribute and need help/support, contact the [X-CASH Localization Workgroup on Taiga](https://taiga.getxcash.org/project/erciccione-venue-localization/) or come chat on `#venue-translations` (Freenode/IRC, riot/matrix, MatterMost)
 
-In order to use the same translation workflow as the [X-CASH Core GUI](https://github.com/xcash-project/xcash-core), they use Qt Linguist translation files.  However, to avoid the dependencies on Qt this normally implies, they use a custom loader to read those files at runtime.
+In order to use the same translation workflow as the [X-CASH Core GUI](https://github.com/venue-project/venue-core), they use Qt Linguist translation files.  However, to avoid the dependencies on Qt this normally implies, they use a custom loader to read those files at runtime.
 
 ### Tools for translators
 
@@ -31,7 +31,7 @@ To build translations after modifying them:
 
 To test a translation:
 
-    LANG=es ./build/release/bin/xcash-wallet-cli
+    LANG=es ./build/release/bin/venue-wallet-cli
 
 To add new translatable strings in the source code:
 

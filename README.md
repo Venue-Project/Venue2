@@ -207,15 +207,15 @@ By default, in either dynamically or statically linked builds, binaries target t
 * ```make release-static-win64``` builds binaries on 64-bit Windows portable across 64-bit Windows systems
 * ```make release-static-win32``` builds binaries on 64-bit or 32-bit Windows portable across 32-bit Windows systems
 
-## Running xcashd
+## Running venued
 
 The build places the binary in `bin/` sub-directory within the build directory
 from which cmake was invoked (repository root by default). To run in
 foreground:
 
-    ./bin/xcashd
+    ./bin/venued
 
-To list all available options, run `./bin/xcashd --help`.  Options can be
+To list all available options, run `./bin/venued --help`.  Options can be
 specified either on the command line or in a configuration file passed by the
 `--config-file` argument.  To specify an option in the configuration file, add
 a line with the syntax `argumentname=value`, where `argumentname` is the name
@@ -223,14 +223,14 @@ of the argument without the leading dashes, for example `log-level=1`.
 
 To run in background:
 
-    ./bin/xcashd --log-file xcashd.log --detach
+    ./bin/venued --log-file venued.log --detach
 
 To run as a systemd service, copy
-[xcashd.service](utils/systemd/xcashd.service) to `/etc/systemd/system/` and
-[xcashd.conf](utils/conf/xcashd.conf) to `/etc/`. The [example
-service](utils/systemd/xcashd.service) assumes that the user `xcash` exists
+[venued.service](utils/systemd/venued.service) to `/etc/systemd/system/` and
+[venued.conf](utils/conf/venued.conf) to `/etc/`. The [example
+service](utils/systemd/venued.service) assumes that the user `xcash` exists
 and its home is the data directory specified in the [example
-config](utils/conf/xcashd.conf).
+config](utils/conf/venued.conf).
 
 If you're on Mac, you may need to add the `--max-concurrency 1` option to
-xcash-wallet-cli, and possibly xcashd, if you get crashes refreshing.
+venue-wallet-cli, and possibly venued, if you get crashes refreshing.
