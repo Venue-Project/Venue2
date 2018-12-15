@@ -1,25 +1,25 @@
-# X-CASH
+# Venue
 
-Copyright (c) 2018 X-CASH Project, Derived from 2014-2018, The Monero Project 
+Copyright (c) 2018 Venue Project, Derived from 2014-2018, The Monero Project 
 Portions Copyright (c) 2012-2013 The Cryptonote developers.
 
 ## Development resources
 
-- Web: [x-cash.org](https://x-cash.org)
-- Explorer: [explorer.x-cash.org](https://explorer.x-cash.org)
+- Web: [Venue.org](https://Venue.org)
+- Explorer: [explorer.Venue.org](https://explorer.Venue.org)
 - Official Mining Pool: [minexcash.com](http://minexcash.com)
 - Bitcointalk: [Bitcointalk](https://bitcointalk.org/index.php?topic=4781246.0)
 - Reddit: [xcash](https://www.reddit.com/r/xcash/)
 - Twitter: [XCashCrypto](https://twitter.com/XCashCrypto/)
 - Telegram: [xcashglobal](https://t.me/xcashglobal)
-- Discord: [x-cash](https://discord.gg/4CAahnd)
-- Medium: [x-cash](https://medium.com/x-cash)
-- Mail: [accounts@x-cash.org](mailto:accounts@x-cash.org)
-- GitHub: [https://github.com/X-CASH-official/X-CASH](https://github.com/X-CASH-official/X-CASH)
+- Discord: [Venue](https://discord.gg/4CAahnd)
+- Medium: [Venue](https://medium.com/Venue)
+- Mail: [accounts@Venue.org](mailto:accounts@Venue.org)
+- GitHub: [https://github.com/Venue-official/Venue](https://github.com/Venue-official/Venue)
 
 ## Introduction
 
-X-CASH is a cryptocurrency built on X-CASH v7 with the aim to become and standard in digital payment and transaction settlement. We believe privacy is very important when it comes to managing personal finances, but at the same time banks and institutions need to know the source of the funds for KYC purposes. Therefore, we plan on leaving the users the choice of whether or not they want their transaction to be public. Because we are implementing a worldwide network of dedicated servers, we hope to make the synchronization of the blockchain faster than other cryptocurrencies as well as reducing transaction latency. We believe this network will be a key component in the deployment of the future improvements we plan on adding to the core code. The main characteristics of X-CASH are detailed below:
+Venue is a cryptocurrency built on Venue v7 with the aim to become and standard in digital payment and transaction settlement. We believe privacy is very important when it comes to managing personal finances, but at the same time banks and institutions need to know the source of the funds for KYC purposes. Therefore, we plan on leaving the users the choice of whether or not they want their transaction to be public. Because we are implementing a worldwide network of dedicated servers, we hope to make the synchronization of the blockchain faster than other cryptocurrencies as well as reducing transaction latency. We believe this network will be a key component in the deployment of the future improvements we plan on adding to the core code. The main characteristics of Venue are detailed below:
 
 -    Total Supply: 100,000,000,000
 
@@ -29,7 +29,7 @@ X-CASH is a cryptocurrency built on X-CASH v7 with the aim to become and standar
 
 -    Reward: ~100,000 XCA at inception
 
--    Emission structure: logarithmic until max supply is reached in 2020. For more information: https://www.x-cash.org
+-    Emission structure: logarithmic until max supply is reached in 2020. For more information: https://www.Venue.org
 
 ## License
 
@@ -52,7 +52,7 @@ If you want to help out, see [CONTRIBUTING](CONTRIBUTING.md) for a set of guidel
 
 Note future releases block heights and dates may change, so make sure to frequently check github, our website, the forums, etc. for the most up to date information.
 
-## Compiling X-CASH from source
+## Compiling Venue from source
 
 ### Dependencies
 
@@ -97,11 +97,11 @@ then run the following command to rebuild using fPIC
 
 ### Cloning the repository
 
-`$ git clone https://github.com/X-CASH-official/X-CASH`
+`$ git clone https://github.com/Venue-official/Venue`
 
 ### Build instructions
 
-X-CASH uses the CMake build system and a top-level [Makefile](Makefile) that
+Venue uses the CMake build system and a top-level [Makefile](Makefile) that
 invokes cmake commands as needed.
 
 #### On Linux and OS X
@@ -109,7 +109,7 @@ invokes cmake commands as needed.
 * Install the dependencies
 * Change to the root of the source code directory and build:
 
-        cd X-CASH
+        cd Venue
         make
 
     *Optional*: If your machine has several cores and enough memory, enable
@@ -122,9 +122,9 @@ invokes cmake commands as needed.
 
 * The resulting executables can be found in `build/release/bin`
 
-* Add `PATH="$PATH:$HOME/X-CASH/build/release/bin"` to `.profile`
+* Add `PATH="$PATH:$HOME/Venue/build/release/bin"` to `.profile`
 
-* Run X-CASH with `xcash --detach`
+* Run Venue with `venued --detach`
 
 * **Optional**: build and run the test suite to verify the binaries:
 
@@ -207,15 +207,15 @@ By default, in either dynamically or statically linked builds, binaries target t
 * ```make release-static-win64``` builds binaries on 64-bit Windows portable across 64-bit Windows systems
 * ```make release-static-win32``` builds binaries on 64-bit or 32-bit Windows portable across 32-bit Windows systems
 
-## Running xcashd
+## Running venued
 
 The build places the binary in `bin/` sub-directory within the build directory
 from which cmake was invoked (repository root by default). To run in
 foreground:
 
-    ./bin/xcashd
+    ./bin/venued
 
-To list all available options, run `./bin/xcashd --help`.  Options can be
+To list all available options, run `./bin/venued --help`.  Options can be
 specified either on the command line or in a configuration file passed by the
 `--config-file` argument.  To specify an option in the configuration file, add
 a line with the syntax `argumentname=value`, where `argumentname` is the name
@@ -223,14 +223,14 @@ of the argument without the leading dashes, for example `log-level=1`.
 
 To run in background:
 
-    ./bin/xcashd --log-file xcashd.log --detach
+    ./bin/venued --log-file venued.log --detach
 
 To run as a systemd service, copy
-[xcashd.service](utils/systemd/xcashd.service) to `/etc/systemd/system/` and
-[xcashd.conf](utils/conf/xcashd.conf) to `/etc/`. The [example
-service](utils/systemd/xcashd.service) assumes that the user `xcash` exists
+[venued.service](utils/systemd/venued.service) to `/etc/systemd/system/` and
+[venued.conf](utils/conf/venued.conf) to `/etc/`. The [example
+service](utils/systemd/venued.service) assumes that the user `xcash` exists
 and its home is the data directory specified in the [example
-config](utils/conf/xcashd.conf).
+config](utils/conf/venued.conf).
 
 If you're on Mac, you may need to add the `--max-concurrency 1` option to
-xcash-wallet-cli, and possibly xcashd, if you get crashes refreshing.
+venue-wallet-cli, and possibly venued, if you get crashes refreshing.
