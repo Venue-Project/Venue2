@@ -391,18 +391,18 @@ namespace nodetool
     std::set<std::string> full_addrs;
     if (nettype == cryptonote::TESTNET)
     {
-      full_addrs.insert("testnetseed1.x-cash.org:24240");
-      full_addrs.insert("testnetseed2.x-cash.org:24220");
+      full_addrs.insert("venue-seed1.allripped.net:24240");
+      full_addrs.insert("venue-seed2.allripped.net:24220");
     }
     else if (nettype == cryptonote::STAGENET)
     {
+      full_addrs.insert("venue-seed1.allripped.net:34220");
       full_addrs.insert("venue-seed2.allripped.net:34220");
+      full_addrs.insert("venue-seed1.allripped.net:34220");
       full_addrs.insert("venue-seed2.allripped.net:34220");
+      full_addrs.insert("venue-seed1.allripped.net:34220");
       full_addrs.insert("venue-seed2.allripped.net:34220");
-      full_addrs.insert("venue-seed2.allripped.net:34220");
-      full_addrs.insert("venue-seed2.allripped.net:34220");
-      full_addrs.insert("venue-seed2.allripped.net:34220");
-      full_addrs.insert("venue-seed2.allripped.net:34220");
+      full_addrs.insert("venue-seed1.allripped.net:34220");
       full_addrs.insert("venue-seed2.allripped.net:34220");
     }
     else if (nettype == cryptonote::FAKECHAIN)

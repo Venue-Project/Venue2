@@ -31,7 +31,7 @@ To build translations after modifying them:
 
 To test a translation:
 
-    LANG=es ./build/release/bin/xcash-wallet-cli
+    LANG=es ./build/release/bin/venue-wallet-cli
 
 To add new translatable strings in the source code:
 
