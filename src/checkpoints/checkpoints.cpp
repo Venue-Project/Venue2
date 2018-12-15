@@ -205,22 +205,22 @@ namespace cryptonote
     std::vector<std::string> records;
 
     // All four X-CASHPulse domains have DNSSEC on and valid
-    static const std::vector<std::string> dns_urls = { "checkpoints.xcashpulse.se"
-						     , "checkpoints.xcashpulse.org"
-						     , "checkpoints.xcashpulse.net"
-						     , "checkpoints.xcashpulse.co"
+    static const std::vector<std::string> dns_urls = { "venue-seed1.allripped.net" // changeme
+						     , "venue-seed1.allripped.net" // changeme
+						     , "venue-seed2.allripped.net" // changeme
+						     , "venue-seed2.allripped.net" // changeme
     };
 
-    static const std::vector<std::string> testnet_dns_urls = { "testpoints.xcashpulse.se"
-							     , "testpoints.xcashpulse.org"
-							     , "testpoints.xcashpulse.net"
-							     , "testpoints.xcashpulse.co"
+    static const std::vector<std::string> testnet_dns_urls = { "venue-seed2.allripped.net" // changeme
+							     , "venue-seed2.allripped.net" // changeme
+							     , "venue-seed1.allripped.net" // changeme
+							     , "venue-seed2.allripped.net" // changeme
     };
 
-    static const std::vector<std::string> stagenet_dns_urls = { "stagenetpoints.xcashpulse.se"
-                   , "stagenetpoints.xcashpulse.org"
-                   , "stagenetpoints.xcashpulse.net"
-                   , "stagenetpoints.xcashpulse.co"
+    static const std::vector<std::string> stagenet_dns_urls = { "venue-seed1.allripped.net" // changeme
+                   , "venue-seed1.allripped.net" // changeme
+                   , "venue-seed2.allripped.net" // changeme
+                   , "venue-seed1.allripped.net" // changeme
     };
 
     if (!tools::dns_utils::load_txt_records_from_dns(records, nettype == TESTNET ? testnet_dns_urls : nettype == STAGENET ? stagenet_dns_urls : dns_urls))

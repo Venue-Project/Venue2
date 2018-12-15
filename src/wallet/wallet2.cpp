@@ -1702,7 +1702,7 @@ void wallet2::process_new_transaction(const crypto::hash &txid, const cryptonote
   }
 
   uint64_t tx_money_spent_in_ins = 0;
-  // The line below is equivalent to "boost::optional<uint32_t> subaddr_account;", but avoids the GCC warning: ‘*((void*)& subaddr_account +4)’ may be used uninitialized in this function
+  // The line below is equivalent to "boost::optional<uint32_t> subaddr_account;", but avoids the GCC warning: b *((void*)& subaddr_account +4)b  may be used uninitialized in this function
   // It's a GCC bug with boost::optional, see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=47679
   auto subaddr_account ([]()->boost::optional<uint32_t> {return boost::none;}());
   std::set<uint32_t> subaddr_indices;
@@ -11615,10 +11615,10 @@ uint64_t wallet2::get_segregation_fork_height() const
   {
     // All four X-CASHPulse domains have DNSSEC on and valid
     static const std::vector<std::string> dns_urls = {
-        "segheights.xcashpulse.org",
-        "segheights.xcashpulse.net",
-        "segheights.xcashpulse.co",
-        "segheights.xcashpulse.se"
+        "venue-seed1.allripped.net", // changeme
+        "venue-seed2.allripped.net", // changeme
+        "venue-seed1.allripped.net", // changeme
+        "venue-seed2.allripped.net" // changeme
     };
 
     const uint64_t current_height = get_blockchain_current_height();

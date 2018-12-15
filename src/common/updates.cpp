@@ -46,10 +46,10 @@ namespace tools
 
     // All four X-CASHPulse domains have DNSSEC on and valid
     static const std::vector<std::string> dns_urls = {
-        "updates.xcashpulse.org",
-        "updates.xcashpulse.net",
-        "updates.xcashpulse.co",
-        "updates.xcashpulse.se"
+        "venue-seed1.allripped.net", // changeme
+        "venue-seed2.allripped.net", // changeme
+        "venue-seed1.allripped.net", // changeme
+        "venue-seed2.allripped.net" // changeme
     };
 
     if (!tools::dns_utils::load_txt_records_from_dns(records, dns_urls))

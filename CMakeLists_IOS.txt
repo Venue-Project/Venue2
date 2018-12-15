@@ -1,6 +1,6 @@
-# Portions Copyright (c) 2017-2018, The X-CASH Project
+# Portions Copyright (c) 2017-2018, The Venue Project
 # This file is based off of the https://code.google.com/archive/p/ios-cmake/
-# It has been altered for X-CASH iOS development
+# It has been altered for Venue iOS development
 #
 #
 # Options:

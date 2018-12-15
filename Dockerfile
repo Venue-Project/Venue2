@@ -143,5 +143,5 @@ VOLUME /wallet
 EXPOSE 18080
 EXPOSE 18081
 
-ENTRYPOINT ["xcashd", "--p2p-bind-ip=0.0.0.0", "--p2p-bind-port=18080", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=18081", "--non-interactive", "--confirm-external-bind"]
+ENTRYPOINT ["venued", "--p2p-bind-ip=0.0.0.0", "--p2p-bind-port=18080", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=18081", "--non-interactive", "--confirm-external-bind"]
 

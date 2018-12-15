@@ -1,4 +1,4 @@
-// Copyright (c) 2018 X-CASH Project, Derived from 2014-2018, The Monero Project
+// Copyright (c) 2018 Venue Project, Derived from 2014-2018, The Monero Project
 //
 // All rights reserved.
 //
@@ -642,7 +642,7 @@ int main(int argc, char* argv[])
 
   if (command_line::get_arg(vm, command_line::arg_help))
   {
-    std::cout << "X-CASH '" << XCASH_RELEASE_NAME << "' (v" << XCASH_VERSION_FULL << ")" << ENDL << ENDL;
+    std::cout << "Venue '" << XCASH_RELEASE_NAME << "' (v" << XCASH_VERSION_FULL << ")" << ENDL << ENDL;
     std::cout << desc_options << std::endl;
     return 1;
   }
@@ -680,7 +680,7 @@ int main(int argc, char* argv[])
   m_config_folder = command_line::get_arg(vm, cryptonote::arg_data_dir);
   db_arg_str = command_line::get_arg(vm, arg_database);
 
-  mlog_configure(mlog_get_default_log_path("xcash-blockchain-import.log"), true);
+  mlog_configure(mlog_get_default_log_path("venue-blockchain-import.log"), true);
   if (!command_line::is_arg_defaulted(vm, arg_log_level))
     mlog_set_log(command_line::get_arg(vm, arg_log_level).c_str());
   else
