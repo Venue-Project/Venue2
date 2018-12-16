@@ -83,6 +83,11 @@
 #define DIFFICULTY_BLOCKS_COUNT                         DIFFICULTY_WINDOW + DIFFICULTY_LAG
 
 
+// Premine code	
+// You can read more about the premine structure at https://x-cash.org/	
+#define PREMINE_BLOCK_HEIGHT								1	
+#define PREMINE_BLOCK_REWARD							((uint64_t)(40000000000000000)
+
 // LWMA difficulty V8
 #define HF_VERSION_LWMA_DIFFICULTY 8
 #define HF_VERSION_LWMA_DIFFICULTY_BLOCK_HEIGHT 95085
