@@ -96,8 +96,7 @@ namespace cryptonote {
 
     // Premine code
     // You can read more about the premine structure at https://x-cash.org/
-    if (height == PREMINE_BLOCK_HEIGHT && already_generated_coins < PREMINE_BLOCK_REWARD)
-    {
+    if (height == PREMINE_BLOCK_HEIGHT && already_generated_coins < PREMINE_BLOCK_REWARD) {
         base_reward = PREMINE_BLOCK_REWARD;
     }
     else 
