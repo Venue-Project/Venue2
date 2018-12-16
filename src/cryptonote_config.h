@@ -50,7 +50,7 @@
 #define BLOCKCHAIN_TIMESTAMP_CHECK_WINDOW               60
 
 // MONEY_SUPPLY - total number coins to be generated
-#define MONEY_SUPPLY                                    ((uint64_t)(100000000000000000))
+#define MONEY_SUPPLY                                    ((uint64_t)(-1))
 #define EMISSION_SPEED_FACTOR_PER_MINUTE                (19)
 #define FINAL_SUBSIDY_PER_MINUTE                        ((uint64_t)3000) // 3 * pow(10, 5)
 
@@ -194,38 +194,38 @@ namespace config
   uint16_t const RPC_DEFAULT_PORT = 14220;
   uint16_t const ZMQ_RPC_DEFAULT_PORT = 14221;
   boost::uuids::uuid const NETWORK_ID = { {
-      0x10 ,0x10, 0x41, 0x53 , 0x48, 0x62 , 0x41, 0x65, 0x17, 0x31, 0x00, 0x82, 0x16, 0xA1, 0xA1, 0x10
+      0x12 ,0x12, 0x43, 0x55 , 0x50, 0x64 , 0x43, 0x67, 0x19, 0x33, 0x02, 0x84, 0x18, 0xA3, 0xA3, 0x12
     } };
-  std::string const GENESIS_TX = "013c01ff0001ffffffffffff0f029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd08807121016380382bc0a0a604c7c60d93e7b23a4a09b48ae7f670a077339a5f0ce8b98b96";
+  std::string const GENESIS_TX = "013c01ff0001ffffffffffff07029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd0880712101e1449447a9c2956bc9fe448d0328fe100a38858a05478484e4d99007ea4b419e";
   uint32_t const GENESIS_NONCE = 10000;
 
   namespace testnet
   {
-    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0x22c23a8;
-    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x2c23a8;
-    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 63;
+    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0x22c23a8; // VENue
+    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x2c23a8; // VENu
+    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 0x7abe3a8; // VENuE
     uint16_t const P2P_DEFAULT_PORT = 24220;
     uint16_t const RPC_DEFAULT_PORT = 24221;
     uint16_t const ZMQ_RPC_DEFAULT_PORT = 24222;
     boost::uuids::uuid const NETWORK_ID = { {
-        0x10 ,0x10, 0x41, 0x53 , 0x48, 0x62 , 0x41, 0x65, 0x17, 0x31, 0x00, 0x82, 0x16, 0xA1, 0xA1, 0x11
+        0x12 ,0x12, 0x43, 0x55 , 0x50, 0x64 , 0x43, 0x67, 0x19, 0x33, 0x02, 0x84, 0x19, 0xA3, 0xA2, 0x13
       } };
-    std::string const GENESIS_TX = "013c01ff0001b197bcc5c605029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd0880712101f1dde8d8d6c53e9d2e920d6e66432eaff6a85b2d25043fc29ef477b075b143df";
+    std::string const GENESIS_TX = "013c01ff0001ffffffffffff07029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd0880712101e1449447a9c2956bc9fe448d0328fe100a38858a05478484e4d99007ea4b419e";
     uint32_t const GENESIS_NONCE = 10001;
   }
 
   namespace stagenet
   {
-    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 24;
-    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 25;
-    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 36;
+    uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0x22c23a8; // VENue
+    uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x2c23a8; // VENu
+    uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 0x7abe3a8; // VENuE
     uint16_t const P2P_DEFAULT_PORT = 34220;
     uint16_t const RPC_DEFAULT_PORT = 34221;
     uint16_t const ZMQ_RPC_DEFAULT_PORT = 34222;
     boost::uuids::uuid const NETWORK_ID = { {
-        0x12 ,0x30, 0xF1, 0x71 , 0x61, 0x04 , 0x41, 0x61, 0x17, 0x31, 0x00, 0x82, 0x16, 0xA1, 0xA1, 0x12
+        0x12 ,0x12, 0x43, 0x55 , 0x50, 0x64 , 0x43, 0x67, 0x19, 0x33, 0x02, 0x84, 0x19, 0xA3, 0xA2, 0x14
       } }; // Bender's daydream
-    std::string const GENESIS_TX = "013c01ff0001ffffffffffff0302df5d56da0c7d643ddd1ce61901c7bdc5fb1738bfe39fbe69c28a3a7032729c0f2101168d0c4ca86fb55a4cf6a36d31431be1c53a3bd7411bb24e8832410289fa6f3b";
+    std::string const GENESIS_TX = "013c01ff0001ffffffffffff07029b2e4c0281c0b02e7c53291a94d1d0cbff8883f8024f5142ee494ffbbd0880712101e1449447a9c2956bc9fe448d0328fe100a38858a05478484e4d99007ea4b419e";
     uint32_t const GENESIS_NONCE = 10002;
   }
 }
