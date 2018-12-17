@@ -127,14 +127,14 @@ namespace nodetool
     virtual std::map<std::string, time_t> get_blocked_hosts() { CRITICAL_REGION_LOCAL(m_blocked_hosts_lock); return m_blocked_hosts; }
   private:
     const std::vector<std::string> m_seed_nodes_list =
-    { "venue-seed1.allripped.net:14219"
-    ,  "venue-seed2.allripped.net:4219"
-    ,  "venue-seed1.allripped.net:4219"
-    ,  "venue-seed2.allripped.net:4219"
-    ,  "venue-seed1.allripped.net:4219"
-    ,  "venue-seed2.allripped.net:4219"
-    ,  "venue-seed1.allripped.net:4219"
-    ,  "venue-seed2.allripped.net:4219"
+    { "venue-seed1.allripped.net:14220"
+    ,  "venue-seed2.allripped.net:14220"
+    ,  "venue-seed1.allripped.net:14220"
+    ,  "venue-seed2.allripped.net:14220"
+    ,  "venue-seed1.allripped.net:14220"
+    ,  "venue-seed2.allripped.net:14220"
+    ,  "venue-seed1.allripped.net:14220"
+    ,  "venue-seed2.allripped.net:14220"
     };
     bool islimitup=false;
     bool islimitdown=false;
