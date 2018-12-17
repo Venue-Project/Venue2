@@ -190,9 +190,9 @@ namespace config
   uint64_t const CRYPTONOTE_PUBLIC_ADDRESS_BASE58_PREFIX = 0x22c23a8; // VENue
   uint64_t const CRYPTONOTE_PUBLIC_INTEGRATED_ADDRESS_BASE58_PREFIX = 0x2c23a8; // VENu
   uint64_t const CRYPTONOTE_PUBLIC_SUBADDRESS_BASE58_PREFIX = 0x7abe3a8; // VENuE // orig:42;
-  uint16_t const P2P_DEFAULT_PORT = 14219;
-  uint16_t const RPC_DEFAULT_PORT = 14220;
-  uint16_t const ZMQ_RPC_DEFAULT_PORT = 14221;
+  uint16_t const P2P_DEFAULT_PORT = 14220;
+  uint16_t const RPC_DEFAULT_PORT = 14221;
+  uint16_t const ZMQ_RPC_DEFAULT_PORT = 14222;
   boost::uuids::uuid const NETWORK_ID = { {
       0x12 ,0x12, 0x43, 0x55 , 0x50, 0x64 , 0x43, 0x67, 0x19, 0x33, 0x02, 0x84, 0x18, 0xA3, 0xA3, 0x12
     } };
